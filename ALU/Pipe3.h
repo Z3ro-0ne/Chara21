@@ -5,12 +5,12 @@
 
 SC_MODULE(Pipe3){
 
-	sc_in< sc_uint<8> > alu;
+	sc_in< sc_int<4> > alu;
 	sc_in<bool> clk;
 
-	sc_out< sc_uint<8> > alu_result;
+	sc_out< sc_int<4> > alu_result;
 
-	sc_uint<4> data;
+	sc_int<4> data;
 
 	void receive(){
 

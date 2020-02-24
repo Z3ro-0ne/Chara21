@@ -6,14 +6,14 @@
 SC_MODULE(Pipe4){
 
 	sc_in<bool> clk;
-	sc_in< sc_uint<4> > dir_reg_in;
-	sc_in< sc_uint<8> > data_in;
+	sc_in< sc_int<4> > dir_reg_in;
+	sc_in< sc_int<4> > data_in;
 
-	sc_out< sc_uint<4> > dir_reg_out;
-	sc_out< sc_uint<8> > data_out;
+	sc_out< sc_int<4> > dir_reg_out;
+	sc_out< sc_int<4> > data_out;
 
-	sc_uint<4> dir_reg;
-	sc_uint<8> data;
+	sc_int<4> dir_reg;
+	sc_int<4> data;
 
 	void receive(){
 

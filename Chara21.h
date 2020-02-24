@@ -16,9 +16,9 @@ SC_MODULE(micro_BC){
 	ALU *alu;
 	DataMemory *data_memory;
 
-	sc_signal< sc_uint<16> > fetch_out_sg;
-	sc_signal< sc_uint<8> >  data_WB_sg, alu_sg, reg_memory_data2, reg_memory_data3;
-	sc_signal< sc_uint<4> > dir_WB_sg, reg_memory_inst; 
+	sc_signal< sc_int<12> > fetch_out_sg;
+	sc_signal< sc_int<4> >  data_WB_sg, alu_sg, reg_memory_data1, reg_memory_data2;
+	sc_signal< sc_int<4> > dir_WB_sg, reg_memory_inst; 
 
 	SC_CTOR(micro_BC){
 
@@ -28,21 +28,21 @@ SC_MODULE(micro_BC){
 		data_memory = new DataMemory("data_memory");
 
 		fetch -> clk(CLK);
-		fetch -> inst(fetch_out_sg);//16
+		fetch -> inst(fetch_out_sg);
 
 		reg_memory -> clk(CLK);
 		reg_memory -> instruction_in(fetch_out_sg);
-		reg_memory -> dir_WB(dir_WB_sg);//4
-		reg_memory -> data_WB(data_WB_sg);//8;
-		reg_memory -> inst(reg_memory_inst);//4
+		reg_memory -> dir_WB(dir_WB_sg);
+		reg_memory -> data_WB(data_WB_sg);
+		reg_memory -> inst(reg_memory_inst);
+		reg_memory -> data1(reg_memory_data1);
 		reg_memory -> data2(reg_memory_data2);
-		reg_memory -> data3(reg_memory_data3);
 
 		alu -> clk(CLK);
 		alu -> inst(reg_memory_inst);
+		alu -> op1(reg_memory_data1);
 		alu -> op2(reg_memory_data2);
-		alu -> op3(reg_memory_data3);
-		alu -> alu_out(alu_sg);//8
+		alu -> alu_out(alu_sg);
 
 		data_memory -> clk(CLK);
 		data_memory -> instruction_og(fetch_out_sg);

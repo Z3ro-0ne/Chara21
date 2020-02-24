@@ -7,9 +7,9 @@
 	
 SC_MODULE(TestBench){
 
-	sc_out< sc_uint<4> > inst, op1, op2, op3;
+	sc_out< sc_int<4> > inst, op1, op2, op3;
 	sc_in<bool> clk;
-	sc_in< sc_uint<8> > alu_out;
+	sc_in< sc_int<8> > alu_out;
 
 	void test(){
 

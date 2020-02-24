@@ -6,9 +6,9 @@
 SC_MODULE(Pipe){
 
 	sc_in<bool> clk;
-	sc_in< sc_uint<16> > input;
-	sc_uint<16> data;
-	sc_out< sc_uint <16> > out;
+	sc_in< sc_int<12> > input;
+	sc_int<12> data;
+	sc_out< sc_int <12> > out;
 
 	void receive(){
 		data = input.read();
@@ -20,10 +20,10 @@ SC_MODULE(Pipe){
 	
 	SC_CTOR(Pipe){
 		SC_METHOD(receive);
-		sensitive << clk.pos() << input;
+		sensitive << clk << input;
 
 		SC_METHOD(exit);
-		sensitive << clk.neg();	
+		sensitive << clk;	
 	}
 	
 };

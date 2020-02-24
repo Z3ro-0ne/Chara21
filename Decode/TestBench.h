@@ -8,11 +8,11 @@
 
 SC_MODULE(TestBench){
 
-	sc_out< sc_uint<16> > instruction_in;
+	sc_out< sc_int<16> > instruction_in;
 	sc_in<bool> clk;
 
-	sc_in< sc_uint<4> > inst, data1, data2, data3;
-	sc_in< sc_uint<16> > instruction_og;
+	sc_in< sc_int<4> > inst, data1, data2, data3;
+	sc_in< sc_int<16> > instruction_og;
 
 	void test(){
 

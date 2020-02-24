@@ -11,9 +11,9 @@ int sc_main(int argc, char* argv[]){
 	TestBench tb("tb");
 	DataMemory dm("dm");
 
-	sc_signal< sc_uint<16> > instruction_og;
-	sc_signal< sc_uint<8> > alu_result, data_WB;
-	sc_signal< sc_uint<4> > register_dir_WB;
+	sc_signal< sc_int<16> > instruction_og;
+	sc_signal< sc_int<8> > alu_result, data_WB;
+	sc_signal< sc_int<4> > register_dir_WB;
 
 	dm.instruction_og(instruction_og);
 	dm.alu_result(alu_result);

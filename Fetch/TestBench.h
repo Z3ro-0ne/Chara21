@@ -7,22 +7,22 @@
 
 SC_MODULE(TestBench){
 
-	sc_in< sc_uint<16> > out;
-	sc_in< sc_uint<16> > inst;
+	sc_in< sc_int<12> > out;
+	sc_in< sc_int<12> > inst;
 	sc_in<bool> clk;
 
 	void output(){
 
-		for(int i = 0; i < 16 ; i++){
+		for(int i = 0; i < 12 ; i++){
 
-			std::cout << inst.read().range(16-(i+1), 16-(i+1));
+			std::cout << inst.read().range(12-(i+1), 12-(i+1));
 		}
 
 		std::cout << " | ";
 
-		for(int i = 0; i < 16 ; i++){
+		for(int i = 0; i < 12 ; i++){
 
-			std::cout << out.read().range(16-(i+1), 16-(i+1));
+			std::cout << out.read().range(12-(i+1), 12-(i+1));
 		}
 
 		std::cout << " | " << clk.read() <<std::endl;

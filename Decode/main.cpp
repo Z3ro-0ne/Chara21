@@ -12,8 +12,8 @@ int sc_main(int argc, char* argv[]){
 	RegisterMemory rg("rg");
 	TestBench tb("tb");
 
-	sc_signal< sc_uint <16> > instruction_in, instruction_og;
-	sc_signal< sc_uint <4> > inst, data1, data2, data3;
+	sc_signal< sc_int <16> > instruction_in, instruction_og;
+	sc_signal< sc_int <4> > inst, data1, data2, data3;
 	//sc_signal<bool> activate_writing;
 
 	rg.instruction_in(instruction_in);

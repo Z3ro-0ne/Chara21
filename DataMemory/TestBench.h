@@ -6,12 +6,12 @@
 
 SC_MODULE(TestBench){
 
-	sc_out< sc_uint<16> > instruction_og;
-	sc_out< sc_uint<8> > alu_result;
+	sc_out< sc_int<16> > instruction_og;
+	sc_out< sc_int<8> > alu_result;
 	sc_in<bool> clk;
 
-	sc_in< sc_uint<4> > register_dir_WB;
-	sc_in< sc_uint<8> > data_WB;
+	sc_in< sc_int<4> > register_dir_WB;
+	sc_in< sc_int<8> > data_WB;
 
 	void output(){
 

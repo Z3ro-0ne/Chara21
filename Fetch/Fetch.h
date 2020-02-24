@@ -10,12 +10,12 @@ SC_MODULE(Fetch){
 
 	ifstream isa_file;
 	sc_in<bool> clk;
-	sc_out< sc_uint<16> > inst;
+	sc_out< sc_int<12> > inst;
 
 	Pipe *pipe;
 	Get *get;
 
-	sc_signal< sc_uint<16> > sg1;
+	sc_signal< sc_int<12> > sg1;
 
 	SC_CTOR(Fetch){
 

@@ -12,8 +12,8 @@ int sc_main(int argc, char* argv[]){
 	ALU alu("alu");
 	TestBench tb("tb");
 
-	sc_signal< sc_uint<4> > inst, op1, op2, op3;
-	sc_signal< sc_uint<8> > alu_out;
+	sc_signal< sc_int<4> > inst, op1, op2, op3;
+	sc_signal< sc_int<8> > alu_out;
 
 	alu.inst(inst);
 	alu.op1(op1);

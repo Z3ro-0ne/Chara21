@@ -1,5 +1,5 @@
 #include <systemc.h>
-#include <micro_BC.h>
+#include <Chara21.h>
 
 int sc_main(int argv, char* argc[]){
 

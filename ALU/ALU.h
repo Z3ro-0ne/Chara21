@@ -2,52 +2,44 @@
 #define ALU_H
 
 #include <systemc.h>
-#include "Adder.h"
-#include "Substract.h"
 #include "Pipe3.h"
-#include "Selecter.h"
-#include "Selection.h"
+#include "Map.h"
+#include "SuperAdder.h"
 
 SC_MODULE(ALU){
 
-	sc_in< sc_uint<4> > inst; /*op1,*/
-	sc_in< sc_uint<8> > op2, op3;
+	sc_in< sc_int<4> > inst;
+	sc_in< sc_int<4> > op1, op2;
 	sc_in<bool> clk;
-	sc_out< sc_uint<8> > alu_out;
+	sc_out< sc_int<4> > alu_out;
 
-	Adder *adder;
-	Substract *substract;
 	Pipe3 *pipe3;
-	Selecter *selecter;
-	Selection *selection;
+	Map *grid;
+	SuperAdder *adder;
 
-	sc_signal< sc_uint<8> > add_sg, sub_sg, result_sg;
-	sc_signal< sc_uint<2> > choice_sg;
-
+	sc_signal< sc_int<4> > dir_sg, value_sg, bio_sg, cult_sg, emo_sg, result_sg;
 	
 	SC_CTOR(ALU){
 
-		adder = new Adder("adder");
-		substract = new Substract("substract");
 		pipe3 =  new Pipe3("pipe3");
-		selecter = new Selecter("selecter");
-		selection = new Selection("selection");
+		grid = new Map("grid");
+		adder = new SuperAdder("adder+");
 
-		selecter -> inst_in(inst);
-		selecter -> choice(choice_sg);
+		grid -> inst_in(inst);
+		grid -> op1(op1);
+		grid -> op2(op2);
+		grid -> dir_out(dir_sg);
+		grid -> value_out(value_sg);
+		grid -> bio_out(bio_sg);
+		grid -> cult_out(cult_sg);
+		grid -> emo_out(emo_sg);
 
-		adder -> a_in(op2);
-		adder -> b_in(op3);
-		adder -> out(add_sg);
-
-		substract -> a_in(op2);
-		substract -> b_in(op3);
-		substract -> out(sub_sg);
-
-		selection -> add_in(add_sg);
-		selection -> sub_in(sub_sg);
-		selection -> choice(choice_sg);
-		selection -> result(result_sg);
+		adder -> dir(dir_sg);
+		adder -> value(value_sg);
+		adder -> bio(bio_sg);
+		adder -> cult(cult_sg);
+		adder -> emo(emo_sg);
+		adder -> result(result_sg);
 
 		pipe3 -> clk(clk);
 		pipe3 -> alu(result_sg);
@@ -58,11 +50,9 @@ SC_MODULE(ALU){
 
 	~ALU(){
 
-		delete substract;
-		delete adder;
 		delete pipe3;
-		delete selection;
-		delete selecter;
+		delete grid;
+		delete adder;
 
 	}
 	
