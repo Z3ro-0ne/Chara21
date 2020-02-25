@@ -18,7 +18,8 @@ COORD moveCult(Entity **node, int x, int y);
 SC_MODULE(Map){
 
 	sc_in< sc_int<4> > inst_in, op1, op2;
-	sc_out< sc_int<4> > dir_out, value_out, bio_out, cult_out, emo_out;
+	sc_in< sc_int<4> > add_in;
+	sc_out< sc_int<4> > dir_out, value_out, bio_out, cult_out, emo_out, coord_x, coord_y;
 
 	Entity **Grid;
 	COORD pos;
@@ -35,6 +36,21 @@ SC_MODULE(Map){
 			bio_out.write(Grid[pos.x][pos.y].getBioTerm());
 			cult_out.write(Grid[pos.x][pos.y].getCultTerm());
 			emo_out.write(Grid[pos.x][pos.y].getEmoTerm());
+			coord_x.write(pos.x);
+			coord_y.write(pos.y);
+
+			switch(op1.read()){
+
+				case 1: bio = add_in.read();
+					break;
+
+				case 2: cult = add_in.read();
+					break;
+
+				case 3: emo = add_in.read();
+					break;
+
+			}
 
 		}
 
@@ -66,7 +82,6 @@ SC_MODULE(Map){
 				break;
 
 			}
-
 
 		}
 

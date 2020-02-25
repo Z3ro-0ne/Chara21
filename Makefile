@@ -16,7 +16,7 @@
 # Por favor, no modifique el resto de la configuración del make
 #--------------------------------- INICIO ---------------------------------
 
-CC  = g++
+CC  = g++ -std=c++11
 X64 = 
 
 ifeq ($(ARQ),64)

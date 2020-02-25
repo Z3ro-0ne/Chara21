@@ -18,7 +18,7 @@ SC_MODULE(Mux){
 
 		} else {
 
-			data_out.write(data_out.read());
+			data_out.write(data_op.read());
 		}
 
 	}

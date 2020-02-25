@@ -2,6 +2,7 @@
 #define PIPE2_H
 
 #include <systemc.h>
+#include <iostream>
 
 SC_MODULE(Pipe2){
 
@@ -26,6 +27,32 @@ SC_MODULE(Pipe2){
 		inst_out = load_inst;
 		data1_out = load_data1;
 		data2_out = load_data2;
+
+		std::cout<<"PIPE 2 REPORTING"<<std::endl;
+
+		for(int i = 0; i < 4; i++){
+
+			std::cout<< load_inst.range(4-(i+1),4-(i+1));
+
+		}
+
+		std::cout<<"\n";
+
+		for(int i = 0; i < 4; i++){
+
+			std::cout<< load_data1.range(4-(i+1),4-(i+1));
+
+		}
+
+		std::cout<<"\n";
+
+		for(int i = 0; i < 4; i++){
+
+			std::cout<< load_data2.range(4-(i+1),4-(i+1));
+
+		}
+
+		std::cout<<"\n";
 
 	}
 

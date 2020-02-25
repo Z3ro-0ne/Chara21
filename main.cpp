@@ -1,5 +1,7 @@
 #include <systemc.h>
-#include <Chara21.h>
+#include <iostream>
+#include "Chara21.h"
+#include "TESTBENCH.h"
 
 int sc_main(int argv, char* argc[]){
 
@@ -7,9 +9,18 @@ int sc_main(int argv, char* argc[]){
 	sc_time DELAY(10,SC_NS);	
 	sc_clock clock("clock",PERIOD,0.5,DELAY,true);
 
-	micro_BC M("M");
+	Chara21 bc("bc");
+	TESTBENCH tb("tb");
 
-	M.CLK(clock);
+	sc_signal< sc_int<4> > out1_sg, out2_sg;
+
+	bc.CLK(clock);
+	bc.out1(out1_sg);
+	bc.out2(out2_sg);
+
+	tb.CLK(clock);
+	tb.out1(out1_sg);
+	tb.out2(out2_sg);
 
 	sc_start();
 

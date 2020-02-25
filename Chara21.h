@@ -1,5 +1,5 @@
-#ifndef MICRO_BC_H
-#define MICRO_BC_H
+#ifndef CHARA21_H
+#define CHARA21_H
 
 #include <systemc.h>
 #include "./Fetch/Fetch.h"
@@ -7,9 +7,10 @@
 #include "./ALU/ALU.h"
 #include "./DataMemory/DataMemory.h"
 
-SC_MODULE(micro_BC){
+SC_MODULE(Chara21){
 
 	sc_in<bool> CLK;
+	sc_out< sc_int<4> > out1, out2;
 
 	Fetch *fetch;
 	RegisterMemory *reg_memory;
@@ -20,7 +21,7 @@ SC_MODULE(micro_BC){
 	sc_signal< sc_int<4> >  data_WB_sg, alu_sg, reg_memory_data1, reg_memory_data2;
 	sc_signal< sc_int<4> > dir_WB_sg, reg_memory_inst; 
 
-	SC_CTOR(micro_BC){
+	SC_CTOR(Chara21){
 
 		fetch = new Fetch("fetch");
 		reg_memory = new RegisterMemory("reg_memory");
@@ -50,7 +51,19 @@ SC_MODULE(micro_BC){
 		data_memory -> register_dir_WB(dir_WB_sg);
 		data_memory -> data_WB(data_WB_sg);
 
+		data_memory -> register_dir_WB(out1);
+		data_memory -> data_WB(out2);
 
+
+	}
+
+	~Chara21(){
+
+		delete fetch;
+		delete reg_memory;
+		delete alu;
+		delete data_memory;
+		
 	}
 
 };

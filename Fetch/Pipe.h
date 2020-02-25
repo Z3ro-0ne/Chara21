@@ -2,6 +2,7 @@
 #define PIPE_H
 
 #include <systemc.h>
+#include <iostream>
 
 SC_MODULE(Pipe){
 
@@ -11,11 +12,24 @@ SC_MODULE(Pipe){
 	sc_out< sc_int <12> > out;
 
 	void receive(){
+
 		data = input.read();
+
 	} 
 
 	void exit(){
+
 		out.write(data);
+
+		std::cout<<"PIPE 1 REPORTING"<<std::endl;
+		for(int i = 0; i < 12; i++){
+
+			std::cout<< data.range(12-(i+1),12-(i+1));
+
+		}
+
+		std::cout<<"\n";
+
 	}
 	
 	SC_CTOR(Pipe){

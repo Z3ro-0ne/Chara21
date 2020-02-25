@@ -22,7 +22,7 @@ SC_MODULE(RegisterMemory){
 	Mux *mux1, *mux2;
 
 	sc_signal< sc_int<4> > decode_inst_sg, decode_op1_sg, decode_op2_sg, cache_inst_sg;
-	sc_signal< sc_int<4> > cache_data1_sg, cache_data2_sg, data_out_sg1, data_out_sg2;
+	sc_signal< sc_int<4> > cache_data1_sg /*cache_data2_sg*/, data_out_sg1 /*data_out_sg2*/;
 
 	SC_CTOR(RegisterMemory){
 
@@ -46,7 +46,7 @@ SC_MODULE(RegisterMemory){
 		cache -> dir2(decode_op2_sg);
 		cache -> inst_out(cache_inst_sg);
 		cache -> data1_out(cache_data1_sg);
-		cache -> data2_out(cache_data2_sg);
+		//cache -> data2_out(cache_data2_sg);
 
 		mux1 -> dir_WB(dir_WB);
 		mux1 -> dir_op(decode_op1_sg);
@@ -54,16 +54,16 @@ SC_MODULE(RegisterMemory){
 		mux1 -> data_op(cache_data1_sg);
 		mux1 -> data_out(data_out_sg1);
 
-		mux2 -> dir_WB(dir_WB);
+		/*mux2 -> dir_WB(dir_WB);
 		mux2 -> dir_op(decode_op2_sg);
 		mux2 -> data_WB(data_WB);
 		mux2 -> data_op(cache_data2_sg);
-		mux2 -> data_out(data_out_sg2);
+		mux2 -> data_out(data_out_sg2);*/
 
 		pipe2 -> clk(clk);
 		pipe2 -> inst_in(cache_inst_sg);
-		pipe2 -> data1_in(data_out_sg1);
-		pipe2 -> data2_in(data_out_sg2);
+		pipe2 -> data1_in(decode_op1_sg);
+		pipe2 -> data2_in(data_out_sg1);
 		pipe2 -> inst_out(inst);
 		pipe2 -> data1_out(data1);
 		pipe2 -> data2_out(data2);

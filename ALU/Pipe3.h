@@ -2,6 +2,7 @@
 #define PIPE3_H
 
 #include <systemc.h>
+#include <iostream>
 
 SC_MODULE(Pipe3){
 
@@ -21,6 +22,16 @@ SC_MODULE(Pipe3){
 	void exit(){
 
 		alu_result = data;
+
+		std::cout<<"PIPE 3 REPORTING"<<std::endl;
+
+		for(int i = 0; i < 4; i++){
+
+			std::cout<< data.range(4-(i+1), 4-(i+1));
+
+		}
+
+		std::cout<<"\n";
 
 	}
 
