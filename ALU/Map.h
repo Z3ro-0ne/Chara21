@@ -14,12 +14,16 @@ void createMap(Entity **node, int x, int y);
 COORD moveBio(Entity **node, int x, int y);
 COORD moveEmo(Entity **node, int x, int y);
 COORD moveCult(Entity **node, int x, int y);
+sc_int<4> Tired(sc_int<4> a, sc_int<4> b);
+sc_int<4> Bored(sc_int<4> a, sc_int<4> b);
+sc_int<4> Anxiety(sc_int<4> value, sc_int<4> bio, sc_int<4> cult, sc_int<4> emo);
+
 
 SC_MODULE(Map){
 
 	sc_in< sc_int<4> > inst_in, op1, op2;
-	sc_in< sc_int<4> > add_in;
-	sc_out< sc_int<4> > dir_out, value_out, bio_out, cult_out, emo_out, coord_x, coord_y;
+	//sc_in< sc_int<4> > add_in;
+	sc_out< sc_int<4> > /*dir_out,*/ value_out/*, bio_out, cult_out, emo_out, coord_x, coord_y*/;
 
 	Entity **Grid;
 	COORD pos;
@@ -31,7 +35,7 @@ SC_MODULE(Map){
 
 		if(inst_in.read() == 2){
 
-			dir_out.write(op1.read());
+			/*dir_out.write(op1.read());
 			value_out.write(op2.read());
 			bio_out.write(Grid[pos.x][pos.y].getBioTerm());
 			cult_out.write(Grid[pos.x][pos.y].getCultTerm());
@@ -50,7 +54,32 @@ SC_MODULE(Map){
 				case 3: emo = add_in.read();
 					break;
 
-			}
+			}*/
+
+			//dir_out.write(op1.read());
+
+			switch(op1.read()){
+
+				case 1: value_out.write(Tired(op2.read(), Grid[pos.x][pos.y].getBioTerm()));
+						bio = Tired(op2.read(), Grid[pos.x][pos.y].getBioTerm());
+					break;
+
+				case 2: value_out.write(Bored(op2.read(),Grid[pos.x][pos.y].getCultTerm()));
+						cult = Bored(op2.read(),Grid[pos.x][pos.y].getCultTerm());
+					break;
+
+				case 3: value_out.write(Anxiety(op2.read(),Grid[pos.x][pos.y].getBioTerm(),Grid[pos.x][pos.y].getCultTerm(),Grid[pos.x][pos.y].getEmoTerm()));
+						emo = Anxiety(op2.read(),Grid[pos.x][pos.y].getBioTerm(),Grid[pos.x][pos.y].getCultTerm(),Grid[pos.x][pos.y].getEmoTerm());
+					break;
+
+				case 4: value_out.write(pos.x);
+					break;
+
+				case 5: value_out.write(pos.y);
+					break;
+
+
+				}
 
 		}
 
@@ -264,5 +293,153 @@ void createMap(Entity **node, int x, int y){
 	}
 
 }
+
+sc_int<4> Tired(sc_int<4> value, sc_int<4> bio){
+
+	sc_int<4> aux;
+
+	aux = value + bio;
+
+	if(aux > 10){
+
+		aux = 10;
+
+	} 
+
+	if(aux > 0){
+
+		aux--;
+
+	} else {
+
+		aux = 0;
+
+	}
+
+	return aux;
+
+}
+
+sc_int<4> Bored(sc_int<4> value, sc_int<4> cult){
+
+	sc_int<4> aux;
+
+	aux = value + cult;
+
+	if(aux > 10){
+
+	aux = 10;
+
+	} 
+
+	if(aux > 0){
+
+		aux--;
+
+	} else {
+
+		aux = 0;
+
+	}
+
+	return aux;
+
+}
+
+sc_int<4> Anxiety(sc_int<4> value, sc_int<4> bio, sc_int<4> cult, sc_int<4> emo){
+
+	sc_int<4> desire;
+	sc_int<4> aux;
+
+	desire = 10;
+
+	aux = value + emo;
+
+	if(aux > 10){
+
+		aux = 10;
+
+	}
+
+	if(((desire - bio) >= 1) and ((desire - bio < 3))){
+
+		if(aux > 0){
+
+			aux--;
+
+		}
+
+	} else if(((desire - bio) >= 3) and ((desire - bio) < 6)){
+
+			if(aux > 0){
+
+				aux = aux - 3;
+
+				if(aux < 0){
+
+					aux = 0;
+
+				}
+
+			}
+
+		} else if(((desire - bio) >= 5) and ((desire - bio) < 9)){
+
+			if(aux > 0){
+
+				aux = aux - 5;
+
+				if(aux < 0){
+
+					aux = 0;
+
+				}
+
+			}
+
+		}
+
+		if(((desire - cult) >= 1) and ((desire - cult) < 3)){
+
+			if(aux > 0){
+
+				aux--;
+
+			}
+
+		} else if(((desire - cult) >= 3) and ((desire - cult) < 6)){
+
+			if(aux > 0){
+
+				aux = aux - 3;
+
+				if(aux < 0){
+
+					aux = 0;
+
+				}
+
+			}
+
+		} else if(((desire - cult) >= 6) and ((desire - cult) < 9)){
+
+			if(aux > 0){
+
+				aux = aux - 5;
+
+				if(aux < 0){
+
+					aux = 5;
+
+				}
+
+			}
+
+		}
+
+		return aux;
+
+	}
+
 
 #endif
