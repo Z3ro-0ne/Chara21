@@ -2,6 +2,7 @@
 #define TESTBENCH_H
 
 #include <systemc.h>
+#include <iostream>
 
 SC_MODULE(TESTBENCH){
 

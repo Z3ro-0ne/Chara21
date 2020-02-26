@@ -6,8 +6,8 @@
 #include "Entity.h"
 
 struct COORD {
-	sc_int<16> x;
-	sc_int<16> y;
+	sc_int<16> x = 0;
+	sc_int<16> y = 0;
 };
 
 void createMap(Entity **node, int x, int y);
@@ -27,9 +27,9 @@ SC_MODULE(Map){
 
 	Entity **Grid;
 	COORD pos;
-	int x, y, look;
+	int x = 9, y = 9, look;
 	sc_int<4> bio, emo, cult;
-	bool flag;
+	bool flag = true;
 
 	void alteration(){
 
@@ -117,12 +117,6 @@ SC_MODULE(Map){
 	}
 
 	SC_CTOR(Map){
-
-		pos.x = 0;
-		pos.y = 0;
-		x = 9;
-		y = 9;
-		flag = true;
 
 		if(flag == true){
 
