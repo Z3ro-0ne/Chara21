@@ -4,7 +4,7 @@
 #include <systemc.h>
 #include <fstream>
 #include "Pipe.h"
-#include "Get.h"
+#include "PC.h"
 
 SC_MODULE(Fetch){
 
@@ -13,17 +13,17 @@ SC_MODULE(Fetch){
 	sc_out< sc_int<12> > inst;
 
 	Pipe *pipe;
-	Get *get;
+	PC *pc;
 
 	sc_signal< sc_int<12> > sg1;
 
 	SC_CTOR(Fetch){
 
 		pipe = new Pipe("pipe");
-		get = new Get("get");
+		pc = new PC("pc");
 
-		get -> clk(clk);
-		get -> read(sg1);
+		pc -> clk(clk);
+		pc -> read(sg1);
 
 		pipe -> clk(clk);
 		pipe -> input(sg1);
@@ -34,7 +34,7 @@ SC_MODULE(Fetch){
 	~Fetch(){
 
 		delete pipe;
-		delete get;
+		delete pc;
 	}
 
 };

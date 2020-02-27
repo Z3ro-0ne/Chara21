@@ -23,7 +23,7 @@ SC_MODULE(Pipe3){
 
 		alu_result = data;
 
-		std::cout<<"PIPE 3 REPORTING"<<std::endl;
+		/*std::cout<<"PIPE 3 REPORTING"<<std::endl;
 
 		for(int i = 0; i < 4; i++){
 
@@ -31,7 +31,7 @@ SC_MODULE(Pipe3){
 
 		}
 
-		std::cout<<"\n";
+		std::cout<<"\n";*/
 
 	}
 

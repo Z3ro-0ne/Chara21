@@ -131,18 +131,18 @@ SC_MODULE(Map){
 
 	}
 
-	~Map(){
+	/*~Map(){
 
 		for(int i = 0; i < x; i++){
 
-			delete[] Grid[i];
+			delete Grid[i];
 
 		}
 
-		delete[] Grid;
+		delete Grid;
 
 
-	}
+	}*/
 
 
 };

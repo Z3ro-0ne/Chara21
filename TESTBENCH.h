@@ -6,21 +6,21 @@
 
 SC_MODULE(TESTBENCH){
 
-	sc_out<bool> CLK;
+	//sc_out<bool> CLK;
 	sc_in<bool> clk;
-	sc_in< sc_int<4> > out1, out2;
+	//sc_in< sc_int<4> > out1, out2;
 
 	void test(){
 
-		CLK.write(clk);
+		//CLK.write(clk);
 
-		for(int i = 0; i < 11; i++){
+		for(int i = 0; i < 9; i++){
 
 			wait();
 
 		}
 
-		for(int i = 0; i < 4; i++){
+		/*for(int i = 0; i < 4; i++){
 
 			std::cout<<out1.read().range(4-(i+1), 4-(i+1));
 
@@ -32,7 +32,7 @@ SC_MODULE(TESTBENCH){
 
 			std::cout<<out2.read().range(4-(i+1), 4-(i+1));
 			
-		}
+		}*/
 
 		sc_stop();
 	}
@@ -40,7 +40,7 @@ SC_MODULE(TESTBENCH){
 	SC_CTOR(TESTBENCH){
 
 		SC_THREAD(test);
-			sensitive << CLK;
+			sensitive << clk;
 
 	}
 

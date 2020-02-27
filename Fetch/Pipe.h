@@ -34,7 +34,7 @@ SC_MODULE(Pipe){
 	
 	SC_CTOR(Pipe){
 		SC_METHOD(receive);
-		sensitive << clk << input;
+		sensitive << clk;
 
 		SC_METHOD(exit);
 		sensitive << clk;	

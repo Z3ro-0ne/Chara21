@@ -12,15 +12,12 @@ int sc_main(int argv, char* argc[]){
   	Fetch ft("ft");
   	TestBench tb("tb");
 
-  	sc_signal< sc_int<12> > inst;
     sc_signal< sc_int<12> > out;
 
-  	ft.inst(inst);
-    ft.out(out);
+    ft.inst(out);
   	ft.clk(clock);
 
-  	tb.inst(inst);
-    tb.out(out);
+  	tb.inst(out);
   	tb.clk(clock);
 
   	sc_start();

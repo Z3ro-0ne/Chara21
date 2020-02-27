@@ -10,7 +10,7 @@
 SC_MODULE(Chara21){
 
 	sc_in<bool> CLK;
-	sc_out< sc_int<4> > out1, out2;
+	//sc_out< sc_int<4> > out1, out2;
 
 	Fetch *fetch;
 	RegisterMemory *reg_memory;
@@ -51,8 +51,8 @@ SC_MODULE(Chara21){
 		data_memory -> register_dir_WB(dir_WB_sg);
 		data_memory -> data_WB(data_WB_sg);
 
-		data_memory -> register_dir_WB(out1);
-		data_memory -> data_WB(out2);
+		/*data_memory -> register_dir_WB(out1);
+		data_memory -> data_WB(out2);*/
 
 
 	}

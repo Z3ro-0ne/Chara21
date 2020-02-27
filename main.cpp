@@ -12,15 +12,16 @@ int sc_main(int argv, char* argc[]){
 	Chara21 bc("bc");
 	TESTBENCH tb("tb");
 
-	sc_signal< sc_int<4> > out1_sg, out2_sg;
+	//sc_signal< sc_int<4> > out1_sg, out2_sg;
 
 	bc.CLK(clock);
-	bc.out1(out1_sg);
-	bc.out2(out2_sg);
+	//bc.out1(out1_sg);
+	//bc.out2(out2_sg);
 
-	tb.CLK(clock);
-	tb.out1(out1_sg);
-	tb.out2(out2_sg);
+	//tb.CLK(clock);
+	tb.clk(clock);
+	//tb.out1(out1_sg);
+	//tb.out2(out2_sg);
 
 	sc_start();
 

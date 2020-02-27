@@ -44,6 +44,8 @@ SC_MODULE(Pipe4){
 			
 		}
 
+		std::cout<<"\n";
+
 	}
 
 	SC_CTOR(Pipe4){
