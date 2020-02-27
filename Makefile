@@ -16,7 +16,7 @@
 # Por favor, no modifique el resto de la configuración del make
 #--------------------------------- INICIO ---------------------------------
 
-CC  = g++ -std=c++98
+CC  = g++
 X64 = 
 
 ifeq ($(ARQ),64)
@@ -39,7 +39,7 @@ ifeq ($(VERSION),systemc-2.3.1c)
 	CC += -std=c++98
 endif
 
-SYSTEMC = /home/yazmary/Escritorio/arq_comp/$(VERSION)
+SYSTEMC = /usr/local/$(VERSION)
 INCDIR  = -I. -I.. -I$(SYSTEMC)/include
 LIBDIR  = -L. -L.. -L$(SYSTEMC)/lib-linux$(X64)
 LIBS    = -lsystemc -lm

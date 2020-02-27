@@ -4,13 +4,14 @@
 #include <iostream>
 #include <systemc.h>
 #include <fstream>
+#include <iomanip>
+#include <string>
 
 SC_MODULE(PC){
 
-	sc_in<bool> clk;
+	sc_in_clk clk;
 	sc_out< sc_int<12> > read;
 	ifstream isa_file;
-	//int pc = 0;
 
 	void fetch(){
 
@@ -18,15 +19,12 @@ SC_MODULE(PC){
 		sc_int <12> aux;
 		std::getline(isa_file, line);
 
-		//pc++;
-
 		if(isa_file.eof()){
 
 			isa_file.seekg(72, ios::beg);
 			
 		}
 
-		std::cout<<line<<std::endl;
 		
 		for(int i = 0; i < 12 ; i++){
 
@@ -34,16 +32,14 @@ SC_MODULE(PC){
 
 		}
 
-		//AQUI IRIA LA CONDICIONAL DE REPETIR..AKA...MOVER EL PUNTERO DEL ARCHIVO AL PUNTO DONDE SE MODIFICAN LOS TERMOMETROS
-
-		read.write(aux);
-
 		std::cout<<"PC REPORTING"<<std::endl;
 		for(int i = 0; i < 12; i++){
 
 			std::cout<< aux.range(12-(i+1),12-(i+1));
 
 		}
+
+		read.write(aux);
 
 		std::cout<<"\n";
 
@@ -56,6 +52,11 @@ SC_MODULE(PC){
 		SC_METHOD(fetch);
 			sensitive << clk;
 
+	}
+
+	~PC(){
+
+		isa_file.close();
 	}
 
 

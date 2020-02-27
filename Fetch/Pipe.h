@@ -3,10 +3,11 @@
 
 #include <systemc.h>
 #include <iostream>
+#include <iomanip>
 
 SC_MODULE(Pipe){
 
-	sc_in<bool> clk;
+	sc_in_clk clk;
 	sc_in< sc_int<12> > input;
 	sc_int<12> data;
 	sc_out< sc_int <12> > out;
@@ -19,7 +20,6 @@ SC_MODULE(Pipe){
 
 	void exit(){
 
-		out.write(data);
 
 		std::cout<<"PIPE 1 REPORTING"<<std::endl;
 		for(int i = 0; i < 12; i++){
@@ -29,6 +29,8 @@ SC_MODULE(Pipe){
 		}
 
 		std::cout<<"\n";
+
+		out.write(data);
 
 	}
 	
