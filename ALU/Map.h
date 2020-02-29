@@ -6,57 +6,32 @@
 #include "Entity.h"
 
 struct COORD {
-	sc_int<16> x = 0;
-	sc_int<16> y = 0;
+	sc_int<16> x;
+	sc_int<16> y;
 };
 
-void createMap(Entity **node, int x, int y);
-COORD moveBio(Entity **node, int x, int y);
-COORD moveEmo(Entity **node, int x, int y);
-COORD moveCult(Entity **node, int x, int y);
+void createMap(int x, int y);
+void moveBio(int x, int y);
+void moveEmo(int x, int y);
+void moveCult(int x, int y);
 sc_int<4> Tired(sc_int<4> a, sc_int<4> b);
 sc_int<4> Bored(sc_int<4> a, sc_int<4> b);
 sc_int<4> Anxiety(sc_int<4> value, sc_int<4> bio, sc_int<4> cult, sc_int<4> emo);
 
+Entity **Grid;
+COORD pos;
 
 SC_MODULE(Map){
 
 	sc_in< sc_int<4> > inst_in, op1, op2;
-	//sc_in< sc_int<4> > add_in;
-	sc_out< sc_int<4> > /*dir_out,*/ value_out/*, bio_out, cult_out, emo_out, coord_x, coord_y*/;
+	sc_out< sc_int<4> > value_out;
 
-	Entity **Grid;
-	COORD pos;
-	int x = 9, y = 9, look;
+	int x , y, look;
 	sc_int<4> bio, emo, cult;
-	bool flag = true;
 
 	void alteration(){
 
 		if(inst_in.read() == 2){
-
-			/*dir_out.write(op1.read());
-			value_out.write(op2.read());
-			bio_out.write(Grid[pos.x][pos.y].getBioTerm());
-			cult_out.write(Grid[pos.x][pos.y].getCultTerm());
-			emo_out.write(Grid[pos.x][pos.y].getEmoTerm());
-			coord_x.write(pos.x);
-			coord_y.write(pos.y);
-
-			switch(op1.read()){
-
-				case 1: bio = add_in.read();
-					break;
-
-				case 2: cult = add_in.read();
-					break;
-
-				case 3: emo = add_in.read();
-					break;
-
-			}*/
-
-			//dir_out.write(op1.read());
 
 			switch(op1.read()){
 
@@ -101,16 +76,27 @@ SC_MODULE(Map){
 
 		switch(look){
 
-			case 1: pos = moveBio(Grid, x, y);//SE MUEVE A UNA ENTIDAD ALTA EN BIOLOGICO
+			case 1: moveBio(x, y);//SE MUEVE A UNA ENTIDAD ALTA EN BIOLOGICO
 				break;
 
-			case 2: pos = moveCult(Grid, x, y);//SE MUEVE A UNA ENTIDAD ALTA EN CULTURA
+			case 2: moveCult(x, y);//SE MUEVE A UNA ENTIDAD ALTA EN CULTURA
 				break;
 
-			case 3: pos = moveEmo(Grid, x, y);//SE MUEVE A UNA ENTIDAD ALTA EN EMOCION
+			case 3: moveEmo(x, y);//SE MUEVE A UNA ENTIDAD ALTA EN EMOCION
 				break;
 
 			}
+
+		}
+
+		if(inst_in.read() == 4){
+
+			x = 9;
+			y = 9;
+			createMap(x, y);
+			pos.x = 0;
+			pos.y = 0;
+
 
 		}
 
@@ -118,60 +104,40 @@ SC_MODULE(Map){
 
 	SC_CTOR(Map){
 
-		if(flag == true){
-
-			createMap(Grid, x, y);
-			flag = false;
-
-		}
-
 		SC_METHOD(alteration);
 			sensitive << inst_in << op1 << op2;
 
-
 	}
-
-	/*~Map(){
-
-		for(int i = 0; i < x; i++){
-
-			delete Grid[i];
-
-		}
-
-		delete Grid;
-
-
-	}*/
 
 
 };
 
-COORD moveBio(Entity **node, int x, int y){
+void moveBio(int x, int y){
 
-	sc_int<4> max = -10;
-	int aux = 0;
-	COORD pos;
+	sc_int<4> max;
+	max = -10;
+	int aux;
+	aux = 0;
 
 	for(int i = 0; i < x; i++){
 
 		for(int j = 0; j < y; j++){
 
-			if((node[i][j].getBioTerm() >= max) and (node[i][j].getAvailable() == true)){
+			if((Grid[i][j].getBioTerm() >= max) and (Grid[i][j].getAvailable() == true)){
 
 				pos.x = i;
 				pos.y = j;
-				max = node[i][j].getBioTerm();
+				max = Grid[i][j].getBioTerm();
 
-			} else if(node[i][j].getAvailable == false){
+			} else if(Grid[i][j].getAvailable() == false){
 
-				aux = node[i][j].getTimes();
+				aux = Grid[i][j].getTimes();
 				aux = aux+1;
-				node[i][j].setTimes(aux);
+				Grid[i][j].setTimes(aux);
 
 				if(aux == 3){
 
-					node[i][j].setAvailable(true);
+					Grid[i][j].setAvailable(true);
 
 				}
 
@@ -181,46 +147,46 @@ COORD moveBio(Entity **node, int x, int y){
 
 	}
 
-	aux = node[pos.x][pos.y].getTimes();
-	node[pos.x][pos.y].setAvailable(false);
-	node[pos.x][pos.y].setTimes(aux++);
+	aux = Grid[pos.x][pos.y].getTimes();
+	Grid[pos.x][pos.y].setAvailable(false);
+	Grid[pos.x][pos.y].setTimes(aux++);
 
-	if(node[pos.x][pos.y].getTimes() == 2){
+	if(Grid[pos.x][pos.y].getTimes() == 2){
 
-		node[pos.x][pos.y].setAvailable(true);
-		node[pos.x][pos.y].setTimes(0);
+		Grid[pos.x][pos.y].setAvailable(true);
+		Grid[pos.x][pos.y].setTimes(0);
 
 	}
 
-	return pos;
 
 }
 
-COORD moveCult(Entity **node, int x, int y){
+void moveCult(int x, int y){
 
-	sc_int<4> max = -10;
-	int aux = 0;
-	COORD pos;
+	sc_int<4> max;
+	max = -10;
+	int aux;
+	aux = 0;
 
 	for(int i = 0; i < x; i++){
 
 		for(int j = 0; j < y; j++){
 
-			if((node[i][j].getCultTerm() >= max) and (node[i][j].getAvailable() == true)){
+			if((Grid[i][j].getCultTerm() >= max) and (Grid[i][j].getAvailable() == true)){
 
 				pos.x = i;
 				pos.y = j;
-				max = node[i][j].getCultTerm();
+				max = Grid[i][j].getCultTerm();
 
-			} else if(node[i][j].getAvailable == false){
+			} else if(Grid[i][j].getAvailable() == false){
 
-				aux = node[i][j].getTimes();
+				aux = Grid[i][j].getTimes();
 				aux = aux+1;
-				node[i][j].setTimes(aux);
+				Grid[i][j].setTimes(aux);
 
 				if(aux == 3){
 
-					node[i][j].setAvailable(true);
+					Grid[i][j].setAvailable(true);
 
 				}
 
@@ -230,46 +196,46 @@ COORD moveCult(Entity **node, int x, int y){
 
 	}
 
-	aux = node[pos.x][pos.y].getTimes();
-	node[pos.x][pos.y].setAvailable(false);
-	node[pos.x][pos.y].setTimes(aux++);
+	aux = Grid[pos.x][pos.y].getTimes();
+	Grid[pos.x][pos.y].setAvailable(false);
+	Grid[pos.x][pos.y].setTimes(aux++);
 
-	if(node[pos.x][pos.y].getTimes() == 2){
+	if(Grid[pos.x][pos.y].getTimes() == 2){
 
-		node[pos.x][pos.y].setAvailable(true);
-		node[pos.x][pos.y].setTimes(0);
+		Grid[pos.x][pos.y].setAvailable(true);
+		Grid[pos.x][pos.y].setTimes(0);
 
 	}
 
-	return pos;
 
 }
 
-COORD moveEmo(Entity **node, int x, int y){
+void moveEmo(int x, int y){
 
-	sc_int<4> max = -10;
-	int aux = 0;
-	COORD pos;
+	sc_int<4> max;
+	max = -10;
+	int aux;
+	aux = 0;
 
 	for(int i = 0; i < x; i++){
 
 		for(int j = 0; j < y; j++){
 
-			if((node[i][j].getEmoTerm() >= max) and (node[i][j].getAvailable() == true)){
+			if((Grid[i][j].getEmoTerm() >= max) and (Grid[i][j].getAvailable() == true)){
 
 				pos.x = i;
 				pos.y = j;
-				max = node[i][j].getEmoTerm();
+				max = Grid[i][j].getEmoTerm();
 
-			} else if(node[i][j].getAvailable == false){
+			} else if(Grid[i][j].getAvailable() == false){
 
-				aux = node[i][j].getTimes();
+				aux = Grid[i][j].getTimes();
 				aux = aux+1;
-				node[i][j].setTimes(aux);
+				Grid[i][j].setTimes(aux);
 
 				if(aux == 3){
 
-					node[i][j].setAvailable(true);
+					Grid[i][j].setAvailable(true);
 
 				}
 
@@ -279,28 +245,27 @@ COORD moveEmo(Entity **node, int x, int y){
 
 	}
 
-	aux = node[pos.x][pos.y].getTimes();
-	node[pos.x][pos.y].setAvailable(false);
-	node[pos.x][pos.y].setTimes(aux++);
+	aux = Grid[pos.x][pos.y].getTimes();
+	Grid[pos.x][pos.y].setAvailable(false);
+	Grid[pos.x][pos.y].setTimes(aux++);
 
-	if(node[pos.x][pos.y].getTimes() == 2){
+	if(Grid[pos.x][pos.y].getTimes() == 2){
 
-		node[pos.x][pos.y].setAvailable(true);
-		node[pos.x][pos.y].setTimes(0);
+		Grid[pos.x][pos.y].setAvailable(true);
+		Grid[pos.x][pos.y].setTimes(0);
 
 	}
 
-	return pos;
 
 }
 
-void createMap(Entity **node, int x, int y){
+void createMap(int x, int y){
 
-	node = new Entity* [x];
+	Grid = new Entity* [x];
 
 		for(int j = 0; j < x; j++){
 
-			node[j] = new Entity[y];
+			Grid[j] = new Entity[y];
 	
 		}
 
@@ -312,13 +277,13 @@ void createMap(Entity **node, int x, int y){
 		for(int j = 0; j < y; j++){
 
 			data1 = (-10) + rand()%((10+1)-(-10));
-			node[i][j].setBioTerm(data1);
+			Grid[i][j].setBioTerm(data1);
 
 			data2 = (-10) + rand()%((10+1)-(-10));
-			node[i][j].setCultTerm(data2);
+			Grid[i][j].setCultTerm(data2);
 
 			data3 = (-10) + rand()%((10+1)-(-10));
-			node[i][j].setEmoTerm(data3);         
+			Grid[i][j].setEmoTerm(data3);         
 
 
 		}

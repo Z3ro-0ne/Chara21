@@ -4,23 +4,27 @@
 #include <systemc.h>
 #include "./Fetch/Fetch.h"
 #include "./Decode/RegisterMemory.h"
+#include "./ALU/ALU.h"
+#include "./DataMemory/DataMemory.h"
 
 SC_MODULE(Chara21){
 
 	sc_in_clk clk;
-	sc_in< sc_int<4> > dir_WB, data_WB;
-	sc_out< sc_int<4> > inst_out, dir_out, data_out;
 
 	Fetch* fetch;
 	RegisterMemory* decode;
+	ALU *alu;
+	DataMemory *data_mem;
 
 	sc_signal< sc_int<12> > fetch_sg; 
-	sc_signal< sc_int<4> > dir_WB_sg, data_WB_sg;
+	sc_signal< sc_int<4> > inst_sg, dir_sg, data_sg, alu_sg, dir_WB, data_WB;
 
 	SC_CTOR(Chara21){
 
 		fetch = new Fetch("fetch");
 		decode = new RegisterMemory("decode");
+		alu = new ALU("alu");
+		data_mem = new DataMemory("data_mem");
 
 		fetch -> clk(clk);
 		fetch -> inst(fetch_sg);
@@ -29,10 +33,21 @@ SC_MODULE(Chara21){
 		decode -> instruction_in(fetch_sg);
 		decode -> dir_WB(dir_WB);
 		decode -> data_WB(data_WB);
-		decode -> inst(inst_out);
-		decode -> data1(dir_out);
-		decode -> data2(data_out);
+		decode -> inst(inst_sg);
+		decode -> data1(dir_sg);
+		decode -> data2(data_sg);
 
+		alu -> clk(clk);
+		alu -> inst(inst_sg);
+		alu -> op1(dir_sg);
+		alu -> op2(data_sg);
+		alu -> alu_out(alu_sg);
+
+		data_mem -> clk(clk);
+		data_mem -> instruction_og(fetch_sg);
+		data_mem -> alu_result(alu_sg);
+		data_mem -> register_dir_WB(dir_WB);
+		data_mem -> data_WB(data_WB);
 
 	}
 

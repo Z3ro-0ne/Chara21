@@ -32,7 +32,7 @@ SC_MODULE(PC){
 
 		}
 
-		if(aux.range(11,8) == 4){// JUMP
+		if(aux.range(11,8) == 5){// JUMP
 
 			isa_file.seekg(120, ios::beg);
 

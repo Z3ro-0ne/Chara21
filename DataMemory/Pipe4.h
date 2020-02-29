@@ -28,7 +28,6 @@ SC_MODULE(Pipe4){
 		dir_reg_out.write(dir_reg);
 		data_out.write(data);
 
-
 	}
 
 	SC_CTOR(Pipe4){

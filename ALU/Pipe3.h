@@ -21,7 +21,19 @@ SC_MODULE(Pipe3){
 
 	void exit(){
 
-		alu_result = data;
+		alu_result.write(data);
+
+		/*std::cout<<"PIPE 3 REPORTING"<<std::endl;
+
+		std::cout<<alu_result<<std::endl;
+
+		for(int i = 0; i < 4; i++){
+
+			std::cout<<alu_result.read().range(4-(i+1),4-(i+1));
+
+		}
+
+		std::cout<<"\n";*/
 
 	}
 
