@@ -19,11 +19,11 @@ SC_MODULE(PC){
 		sc_int <12> aux;
 		std::getline(isa_file, line);
 
-		if(isa_file.eof()){
+		/*if(isa_file.eof()){
 
-			isa_file.seekg(72, ios::beg);
+			isa_file.seekg(132, ios::beg);
 			
-		}
+		}*/
 
 		
 		for(int i = 0; i < 12 ; i++){
@@ -32,17 +32,13 @@ SC_MODULE(PC){
 
 		}
 
-		std::cout<<"PC REPORTING"<<std::endl;
-		for(int i = 0; i < 12; i++){
+		if(aux.range(11,8) == 4){// JUMP
 
-			std::cout<< aux.range(12-(i+1),12-(i+1));
+			isa_file.seekg(120, ios::beg);
 
 		}
 
 		read.write(aux);
-
-		std::cout<<"\n";
-
 
 	}
 
@@ -50,7 +46,7 @@ SC_MODULE(PC){
 
 		isa_file.open("ISA.txt");
 		SC_METHOD(fetch);
-			sensitive << clk;
+			sensitive << clk.neg();
 
 	}
 

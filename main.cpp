@@ -12,16 +12,21 @@ int sc_main(int argv, char* argc[]){
 	Chara21 bc("bc");
 	SuperTestBench tb("tb");
 
-	sc_signal< sc_int<12> > out_sg;
+	sc_signal< sc_int<4> > inst_sg, dir_sg, data_sg, data_WB_sg, dir_WB_sg;
 
 	bc.clk(clock);
-	bc.out(out_sg);
-	//bc.out2(out2_sg);
+	bc.inst_out(inst_sg);
+	bc.dir_out(dir_sg);
+	bc.data_out(data_sg);
+	bc.data_WB(data_WB_sg);
+	bc.dir_WB(dir_WB_sg);
 
-	//tb.CLK(clock);
 	tb.clk(clock);
-	tb.out(out_sg);
-	//tb.out2(out2_sg);
+	tb.inst_out(inst_sg);
+	tb.dir_out(dir_sg);
+	tb.data_out(data_sg);
+	tb.data_WB(data_WB_sg);
+	tb.dir_WB(dir_WB_sg);
 
 	sc_start();
 

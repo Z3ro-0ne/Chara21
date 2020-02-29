@@ -14,7 +14,7 @@ SC_MODULE(Mux){
 
 		if(dir_WB.read() == dir_op.read()){
 
-			data_out.write(data_WB);
+			data_out.write(data_WB.read());
 
 		} else {
 
@@ -26,7 +26,7 @@ SC_MODULE(Mux){
 	SC_CTOR(Mux){
 
 		SC_METHOD(compare);
-			sensitive << dir_WB << dir_op;
+			sensitive << dir_WB << dir_op << data_WB << data_op;
 			
 	}
 

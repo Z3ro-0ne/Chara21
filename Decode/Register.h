@@ -6,11 +6,8 @@
 
 SC_MODULE(Register){
 
-	sc_in< sc_int<4> >dir_inst, dir1, dir2;
-	sc_in< sc_int<4> > dir_WB;
-	sc_in< sc_int<4> > data_WB; 
-	sc_out< sc_int<4> > inst_out;
-	sc_out< sc_int<4> > data1_out /*data2_out*/; 
+	sc_in< sc_int<4> >dir_inst, dir1, dir2, dir_WB, data_WB; 
+	sc_out< sc_int<4> > data1_out, dir_out, inst_out; 
 
 	sc_int<12> storage[32];
 
@@ -18,27 +15,61 @@ SC_MODULE(Register){
 
 	void read(){
 			
-		inst_out = dir_inst;
-		data1_out = storage[dir1.read()];
-		//data2_out = storage[dir2.read()];
-		
+		data1_out.write(storage[dir1.read()]);
+
+		if(dir1.read() == dir_WB.read()){
+
+			dir_out.write(dir_WB.read());
+
+		} else {
+
+			dir_out.write(dir1.read());
+
+		}
+
+		inst_out.write(dir_inst.read());
+
+		/*std::cout<<"REGISTER REPORTING"<<std::endl;
+
+		for(int i = 0; i < 4; i++){
+
+			std::cout<<dir_inst.read().range(4-(i+1),4-(i+1));
+
+		}
+
+		std::cout<<"\t";
+
+		for(int i = 0; i < 4; i++){
+
+			std::cout<<dir_out.read().range(4-(i+1),4-(i+1));
+			
+		}
+
+		std::cout<<"\t";
+
+		for(int i = 0; i < 4; i++){
+
+			std::cout<< data1_out.read().range(4-(i+1),4-(i+1));
+			
+		}
+
+		std::cout<<"\n";*/
 
 	}
 
 	void write(){
 
 		storage[dir1.read()] = dir2.read();
-		//storage[dir2.read()] = dir2.read();
-		storage[dir_WB.read()] = data_WB.read();
+		storage[dir_WB.read()] = dir_WB.read();
 
 	}
 
 	SC_CTOR(Register){
 
 		SC_METHOD(read);
-			sensitive << clk;
+			sensitive << clk.neg();
 		SC_METHOD(write);
-			sensitive << clk;
+			sensitive << clk.pos() << dir_inst << dir1 << dir2 << dir_WB << data_WB;
 
 	}
 

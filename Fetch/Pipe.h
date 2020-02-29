@@ -20,26 +20,26 @@ SC_MODULE(Pipe){
 
 	void exit(){
 
+		out.write(data);
 
-		std::cout<<"PIPE 1 REPORTING"<<std::endl;
+		/*std::cout<<"PIPE 1 REPORTING"<<std::endl;
+
 		for(int i = 0; i < 12; i++){
 
-			std::cout<< data.range(12-(i+1),12-(i+1));
+			std::cout<<out.read().range(12-(i+1),12-(i+1));
 
 		}
 
-		std::cout<<"\n";
-
-		out.write(data);
+		std::cout<<"\n";*/
 
 	}
 	
 	SC_CTOR(Pipe){
 		SC_METHOD(receive);
-		sensitive << clk;
+		sensitive << clk.pos();
 
 		SC_METHOD(exit);
-		sensitive << clk;	
+		sensitive << clk.neg();	
 	}
 	
 };

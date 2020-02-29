@@ -28,33 +28,16 @@ SC_MODULE(Pipe4){
 		dir_reg_out.write(dir_reg);
 		data_out.write(data);
 
-		std::cout<<"PIPE 4 REPORTING"<<std::endl;
-
-		for(int i = 0; i < 4; i++){
-
-			std::cout<< dir_reg.range(4-(i+1), 4-(i+1));
-
-		}
-
-		std::cout<<"\n";
-
-		for(int i = 0; i < 4; i++){
-
-			std::cout<< data.range(4-(i+1), 4-(i+1));
-			
-		}
-
-		std::cout<<"\n";
 
 	}
 
 	SC_CTOR(Pipe4){
 
 		SC_METHOD(receive);
-			sensitive << clk << dir_reg_in << data_in;
+			sensitive << clk.pos();
 
 		SC_METHOD(exit);
-			sensitive << clk;
+			sensitive << clk.neg();
 
 	}
 

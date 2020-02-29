@@ -45,13 +45,7 @@ SC_MODULE(DataMemory){
 		pipe4 -> data_out(data_WB);
 
 	}
-
-	~DataMemory(){
-
-		delete pipe4;
-		delete decoder2;
-		delete reg_file;
-	}
+	
 
 };
 

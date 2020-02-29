@@ -24,44 +24,44 @@ SC_MODULE(Pipe2){
 
 	void exit(){
 
-		inst_out = load_inst;
-		data1_out = load_data1;
-		data2_out = load_data2;
+		inst_out.write(load_inst);
+		data1_out.write(load_data1);
+		data2_out.write(load_data2);
 
-		/*std::cout<<"PIPE 2 REPORTING"<<std::endl;
+		std::cout<<"PIPE 2 REPORTING"<<std::endl;
 
 		for(int i = 0; i < 4; i++){
 
-			std::cout<< load_inst.range(4-(i+1),4-(i+1));
+			std::cout<<inst_out.read().range(4-(i+1),4-(i+1));
 
+		}
+
+		std::cout<<"\t";
+
+		for(int i = 0; i < 4; i++){
+
+			std::cout<<data1_out.read().range(4-(i+1),4-(i+1));
+			
+		}
+
+		std::cout<<"\t";
+
+		for(int i = 0; i < 4; i++){
+
+			std::cout<<data2_out.read().range(4-(i+1),4-(i+1));
+			
 		}
 
 		std::cout<<"\n";
-
-		for(int i = 0; i < 4; i++){
-
-			std::cout<< load_data1.range(4-(i+1),4-(i+1));
-
-		}
-
-		std::cout<<"\n";
-
-		for(int i = 0; i < 4; i++){
-
-			std::cout<< load_data2.range(4-(i+1),4-(i+1));
-
-		}
-
-		std::cout<<"\n";*/
 
 	}
 
 	SC_CTOR(Pipe2){
 
 		SC_METHOD(receive);
-			sensitive << clk;
+			sensitive << clk.pos();
 		SC_METHOD(exit);
-			sensitive << clk;
+			sensitive << clk.neg();
 
 	}
 

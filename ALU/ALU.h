@@ -60,14 +60,6 @@ SC_MODULE(ALU){
 
 	}
 
-	~ALU(){
-
-		delete pipe3;
-		delete grid;
-		//delete adder;
-		//delete mux;
-
-	}
 	
 };
 

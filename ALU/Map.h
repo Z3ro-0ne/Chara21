@@ -163,9 +163,22 @@ COORD moveBio(Entity **node, int x, int y){
 				pos.y = j;
 				max = node[i][j].getBioTerm();
 
-			}
+			} else if(node[i][j].getAvailable == false){
+
+				aux = node[i][j].getTimes();
+				aux = aux+1;
+				node[i][j].setTimes(aux);
+
+				if(aux == 3){
+
+					node[i][j].setAvailable(true);
+
+				}
+
+			} 
 
 		}
+
 	}
 
 	aux = node[pos.x][pos.y].getTimes();
@@ -199,9 +212,22 @@ COORD moveCult(Entity **node, int x, int y){
 				pos.y = j;
 				max = node[i][j].getCultTerm();
 
-			}
+			} else if(node[i][j].getAvailable == false){
+
+				aux = node[i][j].getTimes();
+				aux = aux+1;
+				node[i][j].setTimes(aux);
+
+				if(aux == 3){
+
+					node[i][j].setAvailable(true);
+
+				}
+
+			} 
 
 		}
+
 	}
 
 	aux = node[pos.x][pos.y].getTimes();
@@ -235,9 +261,22 @@ COORD moveEmo(Entity **node, int x, int y){
 				pos.y = j;
 				max = node[i][j].getEmoTerm();
 
-			}
+			} else if(node[i][j].getAvailable == false){
+
+				aux = node[i][j].getTimes();
+				aux = aux+1;
+				node[i][j].setTimes(aux);
+
+				if(aux == 3){
+
+					node[i][j].setAvailable(true);
+
+				}
+
+			} 
 
 		}
+
 	}
 
 	aux = node[pos.x][pos.y].getTimes();

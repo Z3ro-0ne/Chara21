@@ -29,7 +29,7 @@ SC_MODULE(RegisterFile){
 
 			} else {
 
-				if((instru_in.read() == 2) or (instru_in.read() == 3)){ //ADD MOVE
+				if((instru_in.read() == 2) or (instru_in.read() == 3) or(instru_in.read() == 4)){ //ADD MOVE JUMP
 
 					dir_reg_out.write(dir_reg_in.read());
 					data_out.write(data_in.read());

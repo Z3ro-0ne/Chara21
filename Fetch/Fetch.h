@@ -30,12 +30,7 @@ SC_MODULE(Fetch){
 		pipe -> out(inst);
 
 	}
-
-	~Fetch(){
-
-		delete pipe;
-		delete pc;
-	}
+	
 
 };
 
