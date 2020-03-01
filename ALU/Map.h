@@ -38,35 +38,35 @@ SC_MODULE(Map){
 
 				case 1: value_out.write(Tired(data_in.read(), Grid[pos.x][pos.y].getBioTerm()));
 						bio = Tired(data_in.read(), Grid[pos.x][pos.y].getBioTerm());
-						std::cout<<"case 1"<<std::endl;
+						/*std::cout<<"case 1"<<std::endl;
 						std::cout<<bio<<std::endl;
-						std::cout<<value_out.read()<<std::endl;
+						std::cout<<value_out.read()<<std::endl;*/
 					break;
 
 				case 2: value_out.write(Bored(data_in.read(),Grid[pos.x][pos.y].getCultTerm()));
 						cult = Bored(data_in.read(),Grid[pos.x][pos.y].getCultTerm());
-						std::cout<<"case 2"<<std::endl;
+						/*std::cout<<"case 2"<<std::endl;
 						std::cout<<cult<<std::endl;
-						std::cout<<value_out.read()<<std::endl;
+						std::cout<<value_out.read()<<std::endl;*/
 					break;
 
 				case 3: value_out.write(Anxiety(data_in.read(),Grid[pos.x][pos.y].getBioTerm(),Grid[pos.x][pos.y].getCultTerm(),Grid[pos.x][pos.y].getEmoTerm()));
 						emo = Anxiety(data_in.read(),Grid[pos.x][pos.y].getBioTerm(),Grid[pos.x][pos.y].getCultTerm(),Grid[pos.x][pos.y].getEmoTerm());
-						std::cout<<"case 3"<<std::endl;
+						/*std::cout<<"case 3"<<std::endl;
 						std::cout<<emo<<std::endl;
-						std::cout<<value_out.read()<<std::endl;
+						std::cout<<value_out.read()<<std::endl;*/
 					break;
 
 				case 4: value_out.write(pos.x);
-						std::cout<<"case 4"<<std::endl;
+						/*std::cout<<"case 4"<<std::endl;
 						std::cout<<pos.x<<std::endl;
-						std::cout<<value_out.read()<<std::endl;
+						std::cout<<value_out.read()<<std::endl;*/
 					break;
 
 				case 5: value_out.write(pos.y);
-						std::cout<<"case 5"<<std::endl;
+						/*std::cout<<"case 5"<<std::endl;
 						std::cout<<pos.y<<std::endl;
-						std::cout<<value_out.read()<<std::endl;
+						std::cout<<value_out.read()<<std::endl;*/
 					break;
 
 
@@ -324,7 +324,9 @@ sc_int<8> Tired(sc_int<8> value, sc_int<8> bio){
 
 		aux = aux - 1;
 
-	} else if(aux < 0) {
+	}  
+
+	if(aux < 0) {
 
 		aux = 0;
 
@@ -350,7 +352,9 @@ sc_int<8> Bored(sc_int<8> value, sc_int<8> cult){
 
 		aux = aux - 1;
 
-	} else if(aux < 0) {
+	}  
+
+	if(aux < 0) {
 
 		aux = 0;
 
@@ -448,6 +452,12 @@ sc_int<8> Anxiety(sc_int<8> value, sc_int<8> bio, sc_int<8> cult, sc_int<8> emo)
 				}
 
 			}
+
+		}
+
+		if(aux < 0){
+
+			aux = 0;
 
 		}
 

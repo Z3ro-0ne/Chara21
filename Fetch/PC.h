@@ -34,7 +34,7 @@ SC_MODULE(PC){
 
 		if(aux.range(11,8) == 5){// JUMP
 
-			isa_file.seekg(120, ios::beg);
+			isa_file.seekg(132, ios::beg);
 
 		}
 
@@ -46,7 +46,7 @@ SC_MODULE(PC){
 
 		isa_file.open("ISA.txt");
 		SC_METHOD(fetch);
-			sensitive << clk.neg();
+			sensitive << clk;
 
 	}
 

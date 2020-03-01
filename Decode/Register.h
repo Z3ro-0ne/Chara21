@@ -60,9 +60,9 @@ SC_MODULE(Register){
 	SC_CTOR(Register){
 
 		SC_METHOD(read);
-			sensitive << clk.neg();
+			sensitive << clk;
 		SC_METHOD(write);
-			sensitive << clk.pos() << dir_inst << dir1 << dir_WB << data_WB;
+			sensitive << clk << dir_inst << dir1 << dir_WB << data_WB;
 
 	}
 

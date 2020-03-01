@@ -33,10 +33,10 @@ SC_MODULE(Pipe4){
 	SC_CTOR(Pipe4){
 
 		SC_METHOD(receive);
-			sensitive << clk.pos();
+			sensitive << clk;
 
 		SC_METHOD(exit);
-			sensitive << clk.neg();
+			sensitive << clk;
 
 	}
 
