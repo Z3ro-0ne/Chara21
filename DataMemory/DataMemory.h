@@ -9,18 +9,18 @@
 SC_MODULE(DataMemory){
 
 	sc_in< sc_int<12> > instruction_og;
-	sc_in< sc_int<4> > alu_result;
-	sc_in<bool> clk;
+	sc_in< sc_int<8> > alu_result;
+	sc_in_clk clk;
 
 	sc_out< sc_int<4> > register_dir_WB;
-	sc_out< sc_int<4> > data_WB;
+	sc_out< sc_int<8> > data_WB;
 
 	Decoder2 *decoder2;
 	RegisterFile *reg_file;
 	Pipe4 *pipe4;
 
-	sc_signal< sc_int<4> > sg1, sg2;
-	sc_signal< sc_int<4> > sg3, sg4;
+	sc_signal< sc_int<4> > sg1, sg2, sg3;
+	sc_signal< sc_int<8> > sg4;
 
 	SC_CTOR(DataMemory){
 

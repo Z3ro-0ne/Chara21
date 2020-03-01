@@ -9,7 +9,7 @@
 SC_MODULE(Fetch){
 
 	ifstream isa_file;
-	sc_in<bool> clk;
+	sc_in_clk clk;
 	sc_out< sc_int<12> > inst;
 
 	Pipe *pipe;

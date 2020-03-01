@@ -6,13 +6,14 @@
 
 SC_MODULE(Pipe2){
 
-	sc_in<bool> clk;
-	sc_in< sc_int<4> > inst_in;
-	sc_in< sc_int<4> > data1_in, data2_in;
-	sc_out< sc_int<4> > inst_out; 
-	sc_out< sc_int<4> > data1_out, data2_out;
+	sc_in_clk clk;
+	sc_in< sc_int<4> > inst_in, data1_in;
+	sc_in< sc_int<8> > data2_in;
+	sc_out< sc_int<4> > inst_out, data1_out; 
+	sc_out< sc_int<8> > data2_out;
 
-	sc_int <4> load_inst, load_data1, load_data2;
+	sc_int <4> load_inst, load_data1; 
+	sc_int <8> load_data2;
 
 	void receive(){
 
@@ -30,25 +31,28 @@ SC_MODULE(Pipe2){
 
 		/*std::cout<<"PIPE 2 REPORTING"<<std::endl;
 
-		for(int i = 0; i < 4; i++){
+		for(int i = 0; i < 1; i++){
 
-			std::cout<<inst_out.read().range(4-(i+1),4-(i+1));
+			//std::cout<<inst_out.read().range(4-(i+1),4-(i+1));
+			std::cout<<inst_out.read();
 
 		}
 
 		std::cout<<"\t";
 
-		for(int i = 0; i < 4; i++){
+		for(int i = 0; i < 1; i++){
 
-			std::cout<<data1_out.read().range(4-(i+1),4-(i+1));
+			//std::cout<<data1_out.read().range(4-(i+1),4-(i+1));
+			std::cout<<data1_out.read();
 			
 		}
 
 		std::cout<<"\t";
 
-		for(int i = 0; i < 4; i++){
+		for(int i = 0; i < 1; i++){
 
-			std::cout<<data2_out.read().range(4-(i+1),4-(i+1));
+			//std::cout<<data2_out.read().range(4-(i+1),4-(i+1));
+			std::cout<<data2_out.read();
 			
 		}
 

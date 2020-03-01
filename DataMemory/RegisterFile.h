@@ -7,12 +7,12 @@ SC_MODULE(RegisterFile){
 
 	sc_in< sc_int<4> > instru_in;
 	sc_in< sc_int<4> > dir_reg_in;
-	sc_in< sc_int<4> > data_in;
+	sc_in< sc_int<8> > data_in;
 
 	sc_out< sc_int<4> > dir_reg_out;
-	sc_out< sc_int<4> > data_out;
+	sc_out< sc_int<8> > data_out;
 
-	sc_int<12> storage[32] = {0,5,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+	sc_int<8> storage[32] = {0,5,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
 	void operation(){
 
@@ -27,7 +27,7 @@ SC_MODULE(RegisterFile){
 
 				storage[dir_reg_in.read()] = data_in.read();
 
-				if(dir_reg_in.read() == 1){
+				/*if(dir_reg_in.read() == 1){
 
 					std::cout<<"Bio: "<<storage[dir_reg_in.read()]<<std::endl;
 
@@ -47,7 +47,7 @@ SC_MODULE(RegisterFile){
 
 					std::cout<<"Y: "<<storage[dir_reg_in.read()]<<std::endl;
 					std::cout<<"\n\n";
-				}
+				}*/
 
 
 			} else {

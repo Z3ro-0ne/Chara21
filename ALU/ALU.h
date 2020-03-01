@@ -7,15 +7,15 @@
 
 SC_MODULE(ALU){
 
-	sc_in< sc_int<4> > inst;
-	sc_in< sc_int<4> > op1, op2;
-	sc_in<bool> clk;
-	sc_out< sc_int<4> > alu_out;
+	sc_in< sc_int<4> > inst, dir;
+	sc_in< sc_int<8> > data;
+	sc_in_clk clk;
+	sc_out< sc_int<8> > alu_out;
 
 	Pipe3 *pipe3;
 	Map *grid;
 
-	sc_signal< sc_int<4> > value_sg;
+	sc_signal< sc_int<8> > value_sg;
 	
 	SC_CTOR(ALU){
 
@@ -23,8 +23,8 @@ SC_MODULE(ALU){
 		grid = new Map("grid");
 
 		grid -> inst_in(inst);
-		grid -> op1(op1);
-		grid -> op2(op2);
+		grid -> dir_in(dir);
+		grid -> data_in(data);
 		grid -> value_out(value_sg);
 
 		pipe3 -> clk(clk);

@@ -7,9 +7,9 @@
 class Entity{
 
 	private:
-		sc_int<4> bio_term;
-		sc_int<4> cult_term;
-		sc_int<4> emo_term;
+		sc_int<8> bio_term;
+		sc_int<8> cult_term;
+		sc_int<8> emo_term;
 		int times;
 		bool available;
 
@@ -25,7 +25,7 @@ class Entity{
 
 		}
 
-		Entity(int b, int c, int e, int t, bool a){
+		Entity(sc_int<8> b, sc_int<8> c, sc_int<8> e, int t, bool a){
 
 			bio_term = b;
 			cult_term = c;
@@ -35,19 +35,19 @@ class Entity{
 
 		}
 
-		void setBioTerm(int b){
+		void setBioTerm(sc_int<8> b){
 
 			bio_term = b;
 
 		}
 
-		void setCultTerm(int c){
+		void setCultTerm(sc_int<8> c){
 
 			cult_term = c;
 
 		}
 
-		void setEmoTerm(int e){
+		void setEmoTerm(sc_int<8> e){
 
 			emo_term = e;
 
@@ -65,19 +65,19 @@ class Entity{
 
 		}
 
-		sc_int<4> getBioTerm(){
+		sc_int<8> getBioTerm(){
 
 			return bio_term;
 
 		}
 
-		sc_int<4> getCultTerm(){
+		sc_int<8> getCultTerm(){
 
 			return cult_term;
 
 		}
 
-		sc_int<4> getEmoTerm(){
+		sc_int<8> getEmoTerm(){
 
 			return emo_term;
 

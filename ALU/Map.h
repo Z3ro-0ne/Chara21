@@ -6,51 +6,58 @@
 #include "Entity.h"
 
 struct COORD {
-	sc_int<16> x;
-	sc_int<16> y;
+	sc_int<8> x;
+	sc_int<8> y;
 };
 
 void createMap(int x, int y);
 void moveBio(int x, int y);
 void moveEmo(int x, int y);
 void moveCult(int x, int y);
-sc_int<4> Tired(sc_int<4> a, sc_int<4> b);
-sc_int<4> Bored(sc_int<4> a, sc_int<4> b);
-sc_int<4> Anxiety(sc_int<4> value, sc_int<4> bio, sc_int<4> cult, sc_int<4> emo);
+sc_int<8> Tired(sc_int<8> a, sc_int<8> b);
+sc_int<8> Bored(sc_int<8> a, sc_int<8> b);
+sc_int<8> Anxiety(sc_int<8> value, sc_int<8> bio, sc_int<8> cult, sc_int<8> emo);
 
 Entity **Grid;
 COORD pos;
+sc_int<8> bio, emo, cult;
 
 SC_MODULE(Map){
 
-	sc_in< sc_int<4> > inst_in, op1, op2;
-	sc_out< sc_int<4> > value_out;
+	sc_in< sc_int<4> > inst_in, dir_in;
+	sc_in< sc_int<8> > data_in;
+	sc_out< sc_int<8> > value_out;
 
 	int x , y, look;
-	sc_int<4> bio, emo, cult;
 
 	void alteration(){
 
 		if(inst_in.read() == 2){
 
-			switch(op1.read()){
+			switch(dir_in.read()){
 
-				case 1: value_out.write(Tired(op2.read(), Grid[pos.x][pos.y].getBioTerm()));
-						bio = Tired(op2.read(), Grid[pos.x][pos.y].getBioTerm());
+				case 1: value_out.write(Tired(data_in.read(), Grid[pos.x][pos.y].getBioTerm()));
+						bio = Tired(data_in.read(), Grid[pos.x][pos.y].getBioTerm());
 					break;
 
-				case 2: value_out.write(Bored(op2.read(),Grid[pos.x][pos.y].getCultTerm()));
-						cult = Bored(op2.read(),Grid[pos.x][pos.y].getCultTerm());
+				case 2: value_out.write(Bored(data_in.read(),Grid[pos.x][pos.y].getCultTerm()));
+						cult = Bored(data_in.read(),Grid[pos.x][pos.y].getCultTerm());
 					break;
 
-				case 3: value_out.write(Anxiety(op2.read(),Grid[pos.x][pos.y].getBioTerm(),Grid[pos.x][pos.y].getCultTerm(),Grid[pos.x][pos.y].getEmoTerm()));
-						emo = Anxiety(op2.read(),Grid[pos.x][pos.y].getBioTerm(),Grid[pos.x][pos.y].getCultTerm(),Grid[pos.x][pos.y].getEmoTerm());
+				case 3: value_out.write(Anxiety(data_in.read(),Grid[pos.x][pos.y].getBioTerm(),Grid[pos.x][pos.y].getCultTerm(),Grid[pos.x][pos.y].getEmoTerm()));
+						emo = Anxiety(data_in.read(),Grid[pos.x][pos.y].getBioTerm(),Grid[pos.x][pos.y].getCultTerm(),Grid[pos.x][pos.y].getEmoTerm());
 					break;
 
 				case 4: value_out.write(pos.x);
+						std::cout<<"case 4"<<std::endl;
+						std::cout<<pos.x<<std::endl;
+						std::cout<<value_out.read()<<std::endl;
 					break;
 
 				case 5: value_out.write(pos.y);
+						std::cout<<"case 5"<<std::endl;
+						std::cout<<pos.y<<std::endl;
+						std::cout<<value_out.read()<<std::endl;
 					break;
 
 
@@ -64,7 +71,7 @@ SC_MODULE(Map){
 
 			look = 1;
 
-		} else if((cult <= emo) and (cult <= emo)){
+		} else if((cult <= emo) and (cult <= bio)){
 
 			look = 2;
 
@@ -105,7 +112,7 @@ SC_MODULE(Map){
 	SC_CTOR(Map){
 
 		SC_METHOD(alteration);
-			sensitive << inst_in << op1 << op2;
+			sensitive << inst_in << dir_in << data_in;
 
 	}
 
@@ -114,7 +121,7 @@ SC_MODULE(Map){
 
 void moveBio(int x, int y){
 
-	sc_int<4> max;
+	sc_int<8> max;
 	max = -10;
 	int aux;
 	aux = 0;
@@ -163,7 +170,7 @@ void moveBio(int x, int y){
 
 void moveCult(int x, int y){
 
-	sc_int<4> max;
+	sc_int<8> max;
 	max = -10;
 	int aux;
 	aux = 0;
@@ -212,7 +219,7 @@ void moveCult(int x, int y){
 
 void moveEmo(int x, int y){
 
-	sc_int<4> max;
+	sc_int<8> max;
 	max = -10;
 	int aux;
 	aux = 0;
@@ -292,9 +299,9 @@ void createMap(int x, int y){
 
 }
 
-sc_int<4> Tired(sc_int<4> value, sc_int<4> bio){
+sc_int<8> Tired(sc_int<8> value, sc_int<8> bio){
 
-	sc_int<4> aux;
+	sc_int<8> aux;
 
 	aux = value + bio;
 
@@ -306,9 +313,9 @@ sc_int<4> Tired(sc_int<4> value, sc_int<4> bio){
 
 	if(aux > 0){
 
-		aux--;
+		aux = aux - 1;
 
-	} else {
+	} else if(aux < 0) {
 
 		aux = 0;
 
@@ -318,9 +325,9 @@ sc_int<4> Tired(sc_int<4> value, sc_int<4> bio){
 
 }
 
-sc_int<4> Bored(sc_int<4> value, sc_int<4> cult){
+sc_int<8> Bored(sc_int<8> value, sc_int<8> cult){
 
-	sc_int<4> aux;
+	sc_int<8> aux;
 
 	aux = value + cult;
 
@@ -332,9 +339,9 @@ sc_int<4> Bored(sc_int<4> value, sc_int<4> cult){
 
 	if(aux > 0){
 
-		aux--;
+		aux = aux - 1;
 
-	} else {
+	} else if(aux < 0) {
 
 		aux = 0;
 
@@ -344,10 +351,10 @@ sc_int<4> Bored(sc_int<4> value, sc_int<4> cult){
 
 }
 
-sc_int<4> Anxiety(sc_int<4> value, sc_int<4> bio, sc_int<4> cult, sc_int<4> emo){
+sc_int<8> Anxiety(sc_int<8> value, sc_int<8> bio, sc_int<8> cult, sc_int<8> emo){
 
-	sc_int<4> desire;
-	sc_int<4> aux;
+	sc_int<8> desire;
+	sc_int<8> aux;
 
 	desire = 10;
 
@@ -363,7 +370,7 @@ sc_int<4> Anxiety(sc_int<4> value, sc_int<4> bio, sc_int<4> cult, sc_int<4> emo)
 
 		if(aux > 0){
 
-			aux--;
+			aux = aux - 1;
 
 		}
 
@@ -401,7 +408,7 @@ sc_int<4> Anxiety(sc_int<4> value, sc_int<4> bio, sc_int<4> cult, sc_int<4> emo)
 
 			if(aux > 0){
 
-				aux--;
+				aux = aux - 1;
 
 			}
 
