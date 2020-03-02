@@ -2,6 +2,8 @@
 #define REGISTERFILE_H
 
 #include <systemc.h>
+#include <time.h>
+#include <stdlib.h>
 
 SC_MODULE(RegisterFile){
 
@@ -47,6 +49,7 @@ SC_MODULE(RegisterFile){
 
 					case 5: std::cout<<"Y: "<<storage[dir_reg_in.read()];
 							std::cout<<"\n\n";
+							sleep(1);
 						break;
 
 					default: break;

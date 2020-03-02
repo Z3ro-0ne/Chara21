@@ -17,7 +17,7 @@ SC_MODULE(Chara21){
 	DataMemory *data_mem;
 
 	sc_signal< sc_int<12> > fetch_sg; 
-	sc_signal< sc_int<4> > inst_sg, dir_sg, dir_WB;
+	sc_signal< sc_int<4> > inst_sg, dir_sg, dir_WB, sg1, sg2;
 	sc_signal< sc_int<8> > data_sg, alu_sg, data_WB;
 
 	SC_CTOR(Chara21){
@@ -42,10 +42,13 @@ SC_MODULE(Chara21){
 		alu -> inst(inst_sg);
 		alu -> dir(dir_sg);
 		alu -> data(data_sg);
+		alu -> inst_out(sg1);
+		alu -> dir_out(sg2);
 		alu -> alu_out(alu_sg);
 
 		data_mem -> clk(clk);
-		data_mem -> instruction_og(fetch_sg);
+		data_mem -> inst_in(sg1);
+		data_mem -> dir_in(sg2);		
 		data_mem -> alu_result(alu_sg);
 		data_mem -> register_dir_WB(dir_WB);
 		data_mem -> data_WB(data_WB);

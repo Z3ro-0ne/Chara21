@@ -32,12 +32,10 @@ SC_MODULE(RegisterMemory){
 		decode -> inst_in(instruction_in);
 		decode -> inst_out(decode_inst_sg);
 		decode -> op1(decode_op1_sg);
-		//decode -> op2(decode_op2_sg);
 
 		regis -> clk(clk);
 		regis -> dir_inst(decode_inst_sg);
 		regis -> dir1(decode_op1_sg);
-		//regis -> dir2(decode_op2_sg);
 		regis -> dir_WB(dir_WB);
 		regis -> data_WB(data_WB);
 		regis -> inst_out(regis_inst_sg);

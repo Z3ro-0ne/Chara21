@@ -7,21 +7,28 @@
 SC_MODULE(Pipe3){
 
 	sc_in< sc_int<8> > alu;
+	sc_in< sc_int<4> > inst_in, dir_in;
 	sc_in_clk clk;
 
 	sc_out< sc_int<8> > alu_result;
+	sc_out< sc_int<4> > dir_out, inst_out;
 
-	sc_int<4> data;
+	sc_int<8> data, dir, inst;
 
 	void receive(){
 
 		data = alu.read();
+		dir = dir_in.read();
+		inst = inst_in.read();
+
 
 	}
 
 	void exit(){
 
 		alu_result.write(data);
+		dir_out.write(dir);
+		inst_out.write(inst);
 
 		/*std::cout<<"PIPE 3 REPORTING"<<std::endl;
 

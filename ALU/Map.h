@@ -26,6 +26,7 @@ SC_MODULE(Map){
 
 	sc_in< sc_int<4> > inst_in, dir_in;
 	sc_in< sc_int<8> > data_in;
+	sc_out< sc_int<4> > inst_out, dir_out;
 	sc_out< sc_int<8> > value_out;
 
 	int x , y, look;
@@ -38,6 +39,8 @@ SC_MODULE(Map){
 
 				case 1: value_out.write(Tired(data_in.read(), Grid[pos.x][pos.y].getBioTerm()));
 						bio = Tired(data_in.read(), Grid[pos.x][pos.y].getBioTerm());
+						inst_out.write(inst_in.read());
+						dir_out.write(dir_in.read());
 						/*std::cout<<"case 1"<<std::endl;
 						std::cout<<bio<<std::endl;
 						std::cout<<value_out.read()<<std::endl;*/
@@ -45,6 +48,8 @@ SC_MODULE(Map){
 
 				case 2: value_out.write(Bored(data_in.read(),Grid[pos.x][pos.y].getCultTerm()));
 						cult = Bored(data_in.read(),Grid[pos.x][pos.y].getCultTerm());
+						inst_out.write(inst_in.read());
+						dir_out.write(dir_in.read());
 						/*std::cout<<"case 2"<<std::endl;
 						std::cout<<cult<<std::endl;
 						std::cout<<value_out.read()<<std::endl;*/
@@ -52,18 +57,24 @@ SC_MODULE(Map){
 
 				case 3: value_out.write(Anxiety(data_in.read(),Grid[pos.x][pos.y].getBioTerm(),Grid[pos.x][pos.y].getCultTerm(),Grid[pos.x][pos.y].getEmoTerm()));
 						emo = Anxiety(data_in.read(),Grid[pos.x][pos.y].getBioTerm(),Grid[pos.x][pos.y].getCultTerm(),Grid[pos.x][pos.y].getEmoTerm());
+						inst_out.write(inst_in.read());
+						dir_out.write(dir_in.read());
 						/*std::cout<<"case 3"<<std::endl;
 						std::cout<<emo<<std::endl;
 						std::cout<<value_out.read()<<std::endl;*/
 					break;
 
 				case 4: value_out.write(pos.x);
+						inst_out.write(inst_in.read());
+						dir_out.write(dir_in.read());
 						/*std::cout<<"case 4"<<std::endl;
 						std::cout<<pos.x<<std::endl;
 						std::cout<<value_out.read()<<std::endl;*/
 					break;
 
 				case 5: value_out.write(pos.y);
+						inst_out.write(inst_in.read());
+						dir_out.write(dir_in.read());
 						/*std::cout<<"case 5"<<std::endl;
 						std::cout<<pos.y<<std::endl;
 						std::cout<<value_out.read()<<std::endl;*/
@@ -72,51 +83,52 @@ SC_MODULE(Map){
 
 				}
 
-		}
+		} else if(inst_in.read() == 3){//SE BUSCA EL VALOR MAS BAJO PARA DECIDIR QUE ESTIMULACION BUSCAR
 
-		if(inst_in.read() == 3){//SE BUSCA EL VALOR MAS BAJO PARA DECIDIR QUE ESTIMULACION BUSCAR
+				if((bio <= emo) and (bio <= cult)){
 
-			if((bio <= emo) and (bio <= cult)){
+				look = 1;
 
-			look = 1;
+			} else if((cult <= emo) and (cult <= bio)){
 
-		} else if((cult <= emo) and (cult <= bio)){
+				look = 2;
 
-			look = 2;
+			} else if((emo <= bio) and (emo <= cult)){
 
-		} else if((emo <= bio) and (emo <= cult)){
+				look = 3;
 
-			look = 3;
+			}
 
-		}
+			switch(look){
 
-		switch(look){
+				case 1: moveBio(x, y);//SE MUEVE A UNA ENTIDAD ALTA EN BIOLOGICO
+					break;
 
-			case 1: moveBio(x, y);//SE MUEVE A UNA ENTIDAD ALTA EN BIOLOGICO
-				break;
+				case 2: moveCult(x, y);//SE MUEVE A UNA ENTIDAD ALTA EN CULTURA
+					break;
 
-			case 2: moveCult(x, y);//SE MUEVE A UNA ENTIDAD ALTA EN CULTURA
-				break;
+				case 3: moveEmo(x, y);//SE MUEVE A UNA ENTIDAD ALTA EN EMOCION
+					break;
 
-			case 3: moveEmo(x, y);//SE MUEVE A UNA ENTIDAD ALTA EN EMOCION
-				break;
+				}
 
+			} else if(inst_in.read() == 4){//CREACION DEL MAPA
+
+						x = 9;
+						y = 9;
+						createMap(x, y);
+						pos.x = 0;
+						pos.y = 0;
+			} else{
+
+				value_out.write(data_in.read());
+				dir_out.write(dir_in.read());
+				inst_out.write(inst_in.read());
+				
 			}
 
 		}
 
-		if(inst_in.read() == 4){
-
-			x = 9;
-			y = 9;
-			createMap(x, y);
-			pos.x = 0;
-			pos.y = 0;
-
-
-		}
-
-	}
 
 	SC_CTOR(Map){
 
