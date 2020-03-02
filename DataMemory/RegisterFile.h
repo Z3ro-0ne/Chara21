@@ -12,7 +12,7 @@ SC_MODULE(RegisterFile){
 	sc_out< sc_int<4> > dir_reg_out;
 	sc_out< sc_int<8> > data_out;
 
-	sc_int<8> storage[32] = {0,5,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+	sc_int<8> storage[32];
 
 	void operation(){
 
