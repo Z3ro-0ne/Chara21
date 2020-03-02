@@ -3,7 +3,6 @@
 
 #include <systemc.h>
 #include "Pipe4.h"
-#include "Decoder2.h"
 #include "RegisterFile.h"
 
 SC_MODULE(DataMemory){
