@@ -59,8 +59,9 @@ SC_MODULE(RegisterFile){
 								exit(1);
 
 							}
-							system("clear");
 
+							system("clear");
+						
 						break;
 
 					default: break;

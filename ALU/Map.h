@@ -50,34 +50,26 @@ SC_MODULE(Map){
 						cult = Bored(data_in.read(),Grid[pos.x][pos.y].getCultTerm());
 						inst_out.write(inst_in.read());
 						dir_out.write(dir_in.read());
-						/*std::cout<<"case 2"<<std::endl;
-						std::cout<<cult<<std::endl;
-						std::cout<<value_out.read()<<std::endl;*/
+			
 					break;
 
 				case 3: value_out.write(Anxiety(data_in.read(),Grid[pos.x][pos.y].getBioTerm(),Grid[pos.x][pos.y].getCultTerm(),Grid[pos.x][pos.y].getEmoTerm()));
 						emo = Anxiety(data_in.read(),Grid[pos.x][pos.y].getBioTerm(),Grid[pos.x][pos.y].getCultTerm(),Grid[pos.x][pos.y].getEmoTerm());
 						inst_out.write(inst_in.read());
 						dir_out.write(dir_in.read());
-						/*std::cout<<"case 3"<<std::endl;
-						std::cout<<emo<<std::endl;
-						std::cout<<value_out.read()<<std::endl;*/
+				
 					break;
 
 				case 4: value_out.write(pos.x);
 						inst_out.write(inst_in.read());
 						dir_out.write(dir_in.read());
-						/*std::cout<<"case 4"<<std::endl;
-						std::cout<<pos.x<<std::endl;
-						std::cout<<value_out.read()<<std::endl;*/
+					
 					break;
 
 				case 5: value_out.write(pos.y);
 						inst_out.write(inst_in.read());
 						dir_out.write(dir_in.read());
-						/*std::cout<<"case 5"<<std::endl;
-						std::cout<<pos.y<<std::endl;
-						std::cout<<value_out.read()<<std::endl;*/
+						
 					break;
 
 
@@ -326,17 +318,17 @@ sc_int<8> Tired(sc_int<8> value, sc_int<8> bio){
 
 	aux = value + bio;
 
-	if(aux > 10){
-
-		aux = 10;
-
-	} 
-
 	if(aux > 0){
 
 		aux = aux - 1;
 
-	}  
+	}
+
+	if(aux > 10){
+
+		aux = 10;
+
+	}   
 
 	if(aux < 0) {
 
@@ -354,17 +346,17 @@ sc_int<8> Bored(sc_int<8> value, sc_int<8> cult){
 
 	aux = value + cult;
 
-	if(aux > 10){
-
-	aux = 10;
-
-	} 
-
 	if(aux > 0){
 
 		aux = aux - 1;
 
-	}  
+	}
+
+	if(aux > 10){
+
+	aux = 10;
+
+	}   
 
 	if(aux < 0) {
 

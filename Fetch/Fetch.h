@@ -8,7 +8,6 @@
 
 SC_MODULE(Fetch){
 
-	ifstream isa_file;
 	sc_in_clk clk;
 	sc_out< sc_int<8> > inst;
 
