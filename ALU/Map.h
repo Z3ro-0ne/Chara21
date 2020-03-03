@@ -114,8 +114,8 @@ SC_MODULE(Map){
 
 			} else if(inst_in.read() == 4){//CREACION DEL MAPA
 
-						x = 9;
-						y = 9;
+						x = 10;
+						y = 10;
 						createMap(x, y);
 						pos.x = 0;
 						pos.y = 0;

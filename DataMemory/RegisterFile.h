@@ -3,7 +3,8 @@
 
 #include <systemc.h>
 #include <time.h>
-#include <stdlib.h>
+#include <cstdlib>
+#include <iostream>
 
 SC_MODULE(RegisterFile){
 
@@ -31,25 +32,27 @@ SC_MODULE(RegisterFile){
 
 				switch(dir_reg_in.read()){
 
-					case 1: std::cout<<"Bio: "<<storage[dir_reg_in.read()];
+					case 1: std::cout<<"Estado de Chara: "<<std::endl;
+							std::cout<<"*Termometro Biologico: "<<storage[dir_reg_in.read()];
 							std::cout<<"\n";
 						break;
 
-					case 2: std::cout<<"Cult: "<<storage[dir_reg_in.read()];
+					case 2: std::cout<<"*Termometro Cultural: "<<storage[dir_reg_in.read()];
 							std::cout<<"\n";
 						break;
 
-					case 3: std::cout<<"Emo: "<<storage[dir_reg_in.read()];
+					case 3: std::cout<<"*Termometro Emocional: "<<storage[dir_reg_in.read()];
 							std::cout<<"\n";
 						break;
 
-					case 4: std::cout<<"X: "<<storage[dir_reg_in.read()];
+					case 4: std::cout<<"*Coordenada X: "<<storage[dir_reg_in.read()];
 							std::cout<<"\n";
 						break;
 
-					case 5: std::cout<<"Y: "<<storage[dir_reg_in.read()];
+					case 5: std::cout<<"*Coordenada Y: "<<storage[dir_reg_in.read()];
 							std::cout<<"\n\n";
 							sleep(1);
+							system("clear");
 						break;
 
 					default: break;
