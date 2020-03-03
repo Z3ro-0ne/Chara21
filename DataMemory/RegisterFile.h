@@ -10,12 +10,12 @@ SC_MODULE(RegisterFile){
 
 	sc_in< sc_int<4> > instru_in;
 	sc_in< sc_int<4> > dir_reg_in;
-	sc_in< sc_int<8> > data_in;
+	sc_in< sc_int<32> > data_in;
 
 	sc_out< sc_int<4> > dir_reg_out;
-	sc_out< sc_int<8> > data_out;
+	sc_out< sc_int<32> > data_out;
 
-	sc_int<8> storage[32];
+	sc_int<32> storage[32];
 
 	void operation(){
 

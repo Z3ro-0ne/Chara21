@@ -8,15 +8,15 @@
 SC_MODULE(ALU){
 
 	sc_in< sc_int<4> > inst, dir;
-	sc_in< sc_int<8> > data;
+	sc_in< sc_int<32> > data;
 	sc_in_clk clk;
-	sc_out< sc_int<8> > alu_out;
+	sc_out< sc_int<32> > alu_out;
 	sc_out< sc_int<4> > inst_out, dir_out;
 
 	Pipe3 *pipe3;
 	Map *grid;
 
-	sc_signal< sc_int<8> > value_sg;
+	sc_signal< sc_int<32> > value_sg;
 	sc_signal< sc_int<4> > dir_sg, inst_sg;
 	
 	SC_CTOR(ALU){

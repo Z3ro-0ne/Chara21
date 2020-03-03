@@ -10,18 +10,18 @@ SC_MODULE(RegisterMemory){
 	sc_in< sc_int<12> > instruction_in;
 	sc_in_clk clk;
 	sc_in< sc_int<4> > dir_WB;
-	sc_in< sc_int<8> > data_WB;
+	sc_in< sc_int<32> > data_WB;
 
 	sc_out< sc_int<4> > inst; 
 	sc_out< sc_int<4> > dir; 
-	sc_out< sc_int<8> > data;
+	sc_out< sc_int<32> > data;
 
 	Register *regis;
 	Decode *decode;
 	Pipe2 *pipe2;
 
 	sc_signal< sc_int<4> > decode_inst_sg, decode_op1_sg, decode_op2_sg, regis_inst_sg, dir_out_sg;
-	sc_signal< sc_int<8> > regis_data1_sg; 
+	sc_signal< sc_int<32> > regis_data1_sg; 
 
 	SC_CTOR(RegisterMemory){
 

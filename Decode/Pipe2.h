@@ -8,12 +8,12 @@ SC_MODULE(Pipe2){
 
 	sc_in_clk clk;
 	sc_in< sc_int<4> > inst_in, data1_in;
-	sc_in< sc_int<8> > data2_in;
+	sc_in< sc_int<32> > data2_in;
 	sc_out< sc_int<4> > inst_out, data1_out; 
-	sc_out< sc_int<8> > data2_out;
+	sc_out< sc_int<32> > data2_out;
 
 	sc_int <4> load_inst, load_data1; 
-	sc_int <8> load_data2;
+	sc_int <32> load_data2;
 
 	void receive(){
 

@@ -7,19 +7,19 @@
 
 SC_MODULE(DataMemory){
 
-	sc_in< sc_int<8> > alu_result;
+	sc_in< sc_int<32> > alu_result;
 	sc_in< sc_int<4> > inst_in, dir_in;
 	sc_in_clk clk;
 
 	sc_out< sc_int<4> > register_dir_WB;
-	sc_out< sc_int<8> > data_WB;
+	sc_out< sc_int<32> > data_WB;
 
 	
 	RegisterFile *reg_file;
 	Pipe4 *pipe4;
 
 	sc_signal< sc_int<4> > sg1;
-	sc_signal< sc_int<8> > sg2;
+	sc_signal< sc_int<32> > sg2;
 
 	SC_CTOR(DataMemory){
 

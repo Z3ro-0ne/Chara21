@@ -7,11 +7,11 @@
 SC_MODULE(Register){
 
 	sc_in< sc_int<4> >dir_inst, dir1, dir_WB;
-	sc_in< sc_int<8> > data_WB; 
+	sc_in< sc_int<32> > data_WB; 
 	sc_out< sc_int<4> > dir_out, inst_out;
-	sc_out< sc_int<8> > data1_out; 
+	sc_out< sc_int<32> > data1_out; 
 
-	sc_int<8> storage[32];
+	sc_int<32> storage[32];
 
 	sc_in_clk clk;
 

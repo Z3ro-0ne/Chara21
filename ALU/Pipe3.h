@@ -6,14 +6,14 @@
 
 SC_MODULE(Pipe3){
 
-	sc_in< sc_int<8> > alu;
+	sc_in< sc_int<32> > alu;
 	sc_in< sc_int<4> > inst_in, dir_in;
 	sc_in_clk clk;
 
-	sc_out< sc_int<8> > alu_result;
+	sc_out< sc_int<32> > alu_result;
 	sc_out< sc_int<4> > dir_out, inst_out;
 
-	sc_int<8> data, dir, inst;
+	sc_int<32> data, dir, inst;
 
 	void receive(){
 

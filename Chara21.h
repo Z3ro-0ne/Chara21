@@ -18,7 +18,7 @@ SC_MODULE(Chara21){
 
 	sc_signal< sc_int<12> > fetch_sg; 
 	sc_signal< sc_int<4> > inst_sg, dir_sg, dir_WB, sg1, sg2;
-	sc_signal< sc_int<8> > data_sg, alu_sg, data_WB;
+	sc_signal< sc_int<32> > data_sg, alu_sg, data_WB;
 
 	SC_CTOR(Chara21){
 

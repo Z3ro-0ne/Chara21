@@ -6,8 +6,8 @@
 #include "Entity.h"
 
 struct COORD {
-	sc_int<8> x;
-	sc_int<8> y;
+	sc_int<32> x;
+	sc_int<32> y;
 };
 
 void createMap(int x, int y);
@@ -25,9 +25,9 @@ sc_int<8> bio, emo, cult;
 SC_MODULE(Map){
 
 	sc_in< sc_int<4> > inst_in, dir_in;
-	sc_in< sc_int<8> > data_in;
+	sc_in< sc_int<32> > data_in;
 	sc_out< sc_int<4> > inst_out, dir_out;
-	sc_out< sc_int<8> > value_out;
+	sc_out< sc_int<32> > value_out;
 
 	int x , y, look;
 
