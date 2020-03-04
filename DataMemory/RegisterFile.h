@@ -5,6 +5,9 @@
 #include <time.h>
 #include <cstdlib>
 #include <iostream>
+#include <fstream>
+//#include <chrono>
+//#include <thread>
 
 SC_MODULE(RegisterFile){
 
@@ -12,8 +15,11 @@ SC_MODULE(RegisterFile){
 	sc_in< sc_int<4> > dir_reg_in;
 	sc_in< sc_int<32> > data_in;
 
+
 	sc_out< sc_int<4> > dir_reg_out;
 	sc_out< sc_int<32> > data_out;
+
+	ofstream out_file;
 
 	sc_int<32> storage[32];
 
@@ -51,11 +57,14 @@ SC_MODULE(RegisterFile){
 
 					case 5: std::cout<<"*Coordenate Y: "<<storage[dir_reg_in.read()];
 							std::cout<<"\n\n";
+							out_file<<storage[1]<<"//"<<storage[2]<<"//"<<storage[3]<<"//#"<<storage[4]<<"#"<<storage[5]<<"\n";
+							//std::this_thread::sleep_for(std__chrono::miliseconds(1000));
 							sleep(1);
 							if(storage[1] == 0 and storage[2] == 0 and storage[3] == 0){
 
 								std::cout<<"**SIMULATION ENDED**"<<std::endl;
 								std::cout<<"CHARA IS DEAD"<<std::endl;
+								out_file.close();
 								exit(1);
 
 							}
@@ -83,6 +92,8 @@ SC_MODULE(RegisterFile){
 	}
 
 	SC_CTOR(RegisterFile){
+
+		out_file.open("Data.txt");
 
 		SC_METHOD(operation);
 			sensitive << instru_in << data_in << dir_reg_in;
